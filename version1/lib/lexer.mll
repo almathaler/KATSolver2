@@ -18,3 +18,4 @@ rule read =
     | "+" {PLUS}
     | "*" {STAR}
     | eof {EOF}
+    | _ as c { failwith (Printf.sprintf "unexpected character: %C" c) }
