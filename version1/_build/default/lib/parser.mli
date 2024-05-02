@@ -5,9 +5,11 @@ type token =
   | ZERO
   | STAR
   | RPAREN
+  | PTEST of (char)
   | PLUS
   | PACTION of (char)
   | ONE
+  | NEG
   | LPAREN
   | EOF
 
