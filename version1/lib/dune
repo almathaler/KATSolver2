@@ -1,0 +1,4 @@
+(library
+ (name version1)
+ (public_name version1)
+ (modules kat))

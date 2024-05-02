@@ -1,0 +1,16 @@
+# dune exec bin/main.exe
+# OCAMLPARAM: unset
+# Shared cache: disabled
+# Shared cache location: /Users/almathaler/.cache/dune/db
+# Workspace root: /Users/almathaler/Desktop/college/cs6861/KATSolver2/version1
+# Auto-detected concurrency: 8
+# Dune context:
+#  { name = "default"
+#  ; kind = "default"
+#  ; profile = Dev
+#  ; merlin = true
+#  ; fdo_target_exe = None
+#  ; build_dir = In_build_dir "default"
+#  ; instrument_with = []
+#  }
+$ /Users/almathaler/.opam/current/bin/ocamlc.opt -config > /var/folders/6f/bc90rmjn0hlcbyjf7g931g_w0000gn/T/dune_b5f961_output

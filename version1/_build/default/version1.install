@@ -1,0 +1,24 @@
+lib: [
+  "_build/install/default/lib/version1/META"
+  "_build/install/default/lib/version1/dune-package"
+  "_build/install/default/lib/version1/kat.ml"
+  "_build/install/default/lib/version1/kat.mli"
+  "_build/install/default/lib/version1/opam"
+  "_build/install/default/lib/version1/version1.a"
+  "_build/install/default/lib/version1/version1.cma"
+  "_build/install/default/lib/version1/version1.cmi"
+  "_build/install/default/lib/version1/version1.cmt"
+  "_build/install/default/lib/version1/version1.cmx"
+  "_build/install/default/lib/version1/version1.cmxa"
+  "_build/install/default/lib/version1/version1.ml"
+  "_build/install/default/lib/version1/version1__Kat.cmi"
+  "_build/install/default/lib/version1/version1__Kat.cmt"
+  "_build/install/default/lib/version1/version1__Kat.cmti"
+  "_build/install/default/lib/version1/version1__Kat.cmx"
+]
+libexec: [
+  "_build/install/default/lib/version1/version1.cmxs"
+]
+bin: [
+  "_build/install/default/bin/version1"
+]
