@@ -1,4 +1,9 @@
 (library
  (name version1)
  (public_name version1)
- (modules kat))
+ (modules kat parser lexer))
+
+(menhir
+ (modules parser))
+
+(ocamllex lexer)

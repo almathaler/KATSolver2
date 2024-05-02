@@ -1,1 +1,1 @@
-lib/kat.ml:
+lib/kat.ml: String

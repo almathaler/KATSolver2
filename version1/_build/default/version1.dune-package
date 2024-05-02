@@ -7,7 +7,10 @@
    dune-package
    kat.ml
    kat.mli
+   lexer.ml
    opam
+   parser.ml
+   parser.mli
    version1.a
    version1.cma
    version1.cmi
@@ -18,7 +21,14 @@
    version1__Kat.cmi
    version1__Kat.cmt
    version1__Kat.cmti
-   version1__Kat.cmx))
+   version1__Kat.cmx
+   version1__Lexer.cmi
+   version1__Lexer.cmt
+   version1__Lexer.cmx
+   version1__Parser.cmi
+   version1__Parser.cmt
+   version1__Parser.cmti
+   version1__Parser.cmx))
  (libexec (version1.cmxs))
  (bin (version1)))
 (library
@@ -42,5 +52,13 @@
      (module
       (obj_name version1__Kat)
       (visibility public)
-      (source (path Kat) (intf (path kat.mli)) (impl (path kat.ml))))))
+      (source (path Kat) (intf (path kat.mli)) (impl (path kat.ml))))
+     (module
+      (obj_name version1__Lexer)
+      (visibility public)
+      (source (path Lexer) (impl (path lexer.ml))))
+     (module
+      (obj_name version1__Parser)
+      (visibility public)
+      (source (path Parser) (intf (path parser.mli)) (impl (path parser.ml))))))
    (wrapped true))))

@@ -2,3 +2,9 @@
 
 (** @canonical Version1.Kat *)
 module Kat = Version1__Kat
+
+(** @canonical Version1.Lexer *)
+module Lexer = Version1__Lexer
+
+(** @canonical Version1.Parser *)
+module Parser = Version1__Parser

@@ -1,0 +1,15 @@
+type token =
+    ZERO
+  | STAR
+  | RPAREN
+  | PLUS
+  | PACTION of char
+  | ONE
+  | LPAREN
+  | EOF
+val menhir_begin_marker : int
+val xv_kat_sum_or_subterm : Kat.expr
+val xv_kat_subterm : Kat.expr
+val xv_kat_prod_or_subterm : Kat.expr
+val xv_kat_expr : Kat.expr
+val menhir_end_marker : int
