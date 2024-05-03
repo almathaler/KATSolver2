@@ -11,15 +11,18 @@ let rec reassociate subterms constructor =
 and aci_plus _  = failwith "todo"
 
 and aci_times expr =
-  let subtermed_expr = Expr_with_times_subterms.create_from_expr expr in 
+  let subtermed_expr = Expr_with_prod_subterms.create_from_expr expr in 
   (* Now we want to re-associate to the left *)
-  let subterms = Expr_with_times_subterms.subterms subtermed_expr in 
-  reassociate (Expr_set.to_list subterms) (fun e1 e2 -> Expr.Prod (e1, e2))
+  let subterms = Expr_with_prod_subterms.subterms subtermed_expr in 
+  reassociate subterms (fun e1 e2 -> Expr.Prod (e1, e2))
 
 
 and aci_normalize expr = 
   match expr with 
+  | Expr.Prod (Zero, _)  | Expr.Prod (_, Zero) -> Zero 
+  | Expr.Prod (One, e) | Expr.Prod (e, One) -> e 
   | Expr.Prod _ -> aci_times expr 
+  | Expr.Sum (Zero, e) | Expr.Sum (e, Zero) -> e
   | Expr.Sum _ -> aci_plus expr
   | _ -> expr (* Nothing to normalize *)
 

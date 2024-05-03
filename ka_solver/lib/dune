@@ -6,8 +6,8 @@
   (pps ppx_sexp_conv))
  (modules
   expr
-  expr_with_plus_subterms
-  expr_with_times_subterms
+  expr_with_sum_subterms
+  expr_with_prod_subterms
   expr_set
   equivalence_checker
   parser

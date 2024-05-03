@@ -1,4 +1,9 @@
-type t 
+type t = Expr.t * Expr.t list (* This should NOT be a set, b/c idempotency doesn't work for times! *)
+
+(* TODO: Make this recursion better *)
+let rec get_times_subterms = function 
+  | Expr.Prod (e1, e2) -> List.append (get_times_subterms e1) (get_times_subterms e2) 
+  | e -> [e]
 
 (** Populates the set of subterms with the subterms of the highest-level 
     TIMES. For example, the following expression: 
@@ -11,6 +16,9 @@ type t
     but any non-TIMES that we encounter is not entered, and instead is taken 
     as a subterm, regardless of whether it contains TIMES subterms itself.   
 *)
-val create_from_expr : Expr.t -> t
+let create_from_expr expr = 
+  (expr, get_times_subterms expr)
 
-val subterms : t -> Expr_set.t
+let subterms t = 
+  match t with 
+  | (_, terms) -> terms 
