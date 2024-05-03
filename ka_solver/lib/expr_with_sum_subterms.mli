@@ -12,3 +12,5 @@ type t
     as a subterm, regardless of whether it contains plus subterms itself.   
 *)
 val create_from_expr : Expr.t -> t
+
+val subterms : t -> Expr_set.t 

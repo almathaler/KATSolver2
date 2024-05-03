@@ -10,7 +10,14 @@ let rec reassociate subterms constructor =
     (subterms |> List.hd) (subterms |> List.tl)
 
     (* TODO *)
-and aci_plus expr  = expr
+and aci_plus expr  = 
+  let subtermed_expr = Expr_with_sum_subterms.create_from_expr expr in 
+  (* Now we want to delete duplicates, order alphabetically, 
+     and re-associate to the left *)
+  let subterms = Expr_with_sum_subterms.subterms subtermed_expr in 
+  let no_dupes_subterms = Expr_set.to_list subterms in 
+  let alphabetized_and_no_dupes_subterms = List.stable_sort Expr.compare no_dupes_subterms in
+  reassociate alphabetized_and_no_dupes_subterms (fun e1 e2 -> Expr.Sum (e1, e2))
 
 and aci_times expr =
   let subtermed_expr = Expr_with_prod_subterms.create_from_expr expr in 

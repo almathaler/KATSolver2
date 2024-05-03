@@ -9,3 +9,5 @@ let add = Underlying.add
 let singleton = Underlying.singleton
 
 let to_list = Underlying.to_list
+
+let of_list = Underlying.of_list
