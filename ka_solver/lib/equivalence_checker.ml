@@ -5,7 +5,7 @@ let _brz_e _ : Expr.t -> int = failwith "todo"
 
 let _brz_d _ _ : char -> Expr.t -> Expr.t = failwith "todo"
 
-let _aci_normalize _ : Expr.t -> Expr.t = failwith "todo"
+let aci_normalize _ = failwith "todo"
 
 let _aci_plus _ : Expr.t -> Expr.t = failwith "todo"
 
