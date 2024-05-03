@@ -1,0 +1,6 @@
+(library
+ (name expect_tests)
+ (libraries core ka_solver)
+ (inline_tests)
+ (preprocess
+  (pps ppx_expect)))
