@@ -1,4 +1,9 @@
 (library
  (name ka_solver)
  (public_name ka_solver)
- (modules expr expr_with_plus_subterms expr_with_times_subterms expr_set))
+ (modules
+  expr
+  expr_with_plus_subterms
+  expr_with_times_subterms
+  expr_set
+  equivalence_checker))
