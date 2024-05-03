@@ -1,10 +1,14 @@
+open Core
+
 (** The AST of a Kleene Algebra Expression*)
 type t = 
 | Zero 
 | One 
-| Plus of (t * t) 
-| Times of (t * t) 
+| Prim of char
+| Sum of (t * t) 
+| Prod of (t * t) 
 | Star of t
+[@@deriving sexp]
 
 (** Unintuitively, this compares exprs alphabetically. So for example, 
     a > (b + a) 
@@ -13,3 +17,5 @@ type t =
 val compare : t -> t -> int
 
 val leftmost_char : t -> char 
+
+val sexp_of_t : t -> Sexp.t 

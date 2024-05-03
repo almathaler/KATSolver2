@@ -1,4 +1,4 @@
 (executable
  (public_name ka_solver)
  (name main)
- (libraries ka_solver))
+ (libraries core ka_solver))
