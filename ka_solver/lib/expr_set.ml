@@ -7,3 +7,5 @@ let empty = Underlying.empty
 let add = Underlying.add 
 
 let singleton = Underlying.singleton
+
+let to_list = Underlying.to_list
