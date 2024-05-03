@@ -6,9 +6,11 @@ let _brz_e _ : Expr.t -> int = failwith "todo"
 let _brz_d _ _ : char -> Expr.t -> Expr.t = failwith "todo"
 
 let rec reassociate subterms constructor = 
-  List.fold_left (fun acc subterm -> constructor acc (aci_normalize subterm)) (subterms |> List.hd) (subterms |> List.tl)
+  List.fold_left (fun acc subterm -> constructor acc (aci_normalize subterm)) 
+    (subterms |> List.hd) (subterms |> List.tl)
 
-and aci_plus _  = failwith "todo"
+    (* TODO *)
+and aci_plus expr  = expr
 
 and aci_times expr =
   let subtermed_expr = Expr_with_prod_subterms.create_from_expr expr in 
