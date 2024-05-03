@@ -13,7 +13,7 @@
 %token NEG
 %token EOF
 
-%left PLUS 
+%left PLUS
 
 %start <Kat.expr> kat_expr 
 

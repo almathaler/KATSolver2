@@ -1,6 +1,0 @@
-# dune init project ka_solver
-# OCAMLPARAM: unset
-# Shared cache: disabled
-# Shared cache location: /Users/almathaler/.cache/dune/db
-# Workspace root: /Users/almathaler/Desktop/college/cs6861/KATSolver2/ka_solver
-# Auto-detected concurrency: 8
