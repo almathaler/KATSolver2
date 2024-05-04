@@ -136,7 +136,6 @@ let%expect_test "z + x + y" =
     After aci_norm:
     (Sum ((Sum ((Prim x) (Prim y))) (Prim z))) |}]
 
-(* TODO: Want the ordering to be 'ab+ac' so need alphabetic comparison to go deeper*)
 let%expect_test "ac + ab" = 
   test "ac + ab";
   [%expect {|
