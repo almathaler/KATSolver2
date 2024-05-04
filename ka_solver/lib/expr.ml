@@ -9,13 +9,19 @@ type t =
 | Star of t
 [@@deriving sexp]
 
-(* let rec leftmost_char = function 
-  | Zero -> '0' 
-  | One -> '1' 
-  | Prim c -> c 
-  | Sum (e1, _) -> leftmost_char e1 
-  | Prod (e1, _) -> leftmost_char e1 
-  | Star e -> leftmost_char e *)
+(* Note: The behavior is a bit unintuitive, because for example the 
+   string of "(a+b)+(ab)" is "a+b+(a)(b)". And so [compare a ab] gives 
+   [a > ab] because [String.compare a (a)(b)] is 1. BUT I don't think this 
+   needs to make sense to the user, the comparison is just used in ACI 
+   normalization, so what's important is that it's standard for all expressions. 
+   TODO: Come back to this later and think about it again *)
+let rec to_string = function 
+  | Zero -> "0"
+  | One -> "1"
+  | Prim c -> Char.to_string c 
+  | Star e -> (to_string e) ^ "*"
+  | Sum (e1, e2) -> (to_string e1) ^ "+" ^ (to_string e2) 
+  | Prod (e1, e2) -> "(" ^ (to_string e1) ^ ")(" ^ (to_string e2) ^ ")"
 
 let rec chars = function 
   | Zero -> "0" 
@@ -25,6 +31,6 @@ let rec chars = function
   | Sum (e1, e2) | Prod (e1, e2) -> (chars e1) ^ (chars e2)
 
 let compare e1 e2 = 
-  String.compare (chars e1) (chars e2)
+  String.compare (to_string e1) (to_string e2)
 
 let sexp_of_t = sexp_of_t

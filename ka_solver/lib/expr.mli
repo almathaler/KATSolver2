@@ -10,6 +10,8 @@ type t =
 | Star of t
 [@@deriving sexp]
 
+val to_string : t -> string 
+
 (** Unintuitively, this compares exprs alphabetically. So for example, 
     a > (b + a) 
     Even though of course in KA a <= b + a. 
