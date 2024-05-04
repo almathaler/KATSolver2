@@ -37,3 +37,9 @@ let compare e1 e2 =
   String.compare (to_string e1) (to_string e2)
 
 let sexp_of_t = sexp_of_t
+
+let int_to_expr i = 
+  match i with 
+  | 0 -> Zero 
+  | 1 -> One 
+  | _ -> raise (Invalid_argument "Non-{0,1} given to be converted to expr")

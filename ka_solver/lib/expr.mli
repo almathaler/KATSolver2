@@ -22,3 +22,5 @@ val compare : t -> t -> int
 val alphabet : t -> char list 
 
 val sexp_of_t : t -> Sexp.t 
+
+val int_to_expr : int -> t 

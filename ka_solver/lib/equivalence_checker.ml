@@ -1,5 +1,3 @@
-let brz_d _ _  = failwith "todo"
-
 module Brz_e = struct 
   type t = (Expr.t, int) Hashtbl.t
 
@@ -15,6 +13,33 @@ module Brz_e = struct
       | Sum (e1, e2) -> Int.logor (brz_e t e1) (brz_e t e2)
       | Prod (e1, e2) -> Int.logand (brz_e t e1) (brz_e t e2) 
       | Star _ -> 1 
+
+end
+
+module Brz_d = struct 
+  type t = ((char * Expr.t), Expr.t) Hashtbl.t 
+
+  let brz_e = Brz_e.create 
+  let create : t = Hashtbl.create 16 
+
+  let rec brz_d t (a : char) (expr : Expr.t) : Expr.t = 
+    try Hashtbl.find t (a, expr) with 
+    Not_found -> 
+      match expr with 
+      | Prim b -> if (a=b) then One else Zero 
+      | Zero -> Zero 
+      | One -> Zero 
+      | Sum (e1, e2) -> 
+        (Sum((brz_d t a e1), (brz_d t a e2)))
+      | Prod (e1, e2) -> (
+        Sum (
+          Prod (brz_d t a e1, e2), 
+          Prod (Expr.int_to_expr (Brz_e.brz_e brz_e e1), brz_d t a e2)
+        )
+      )
+      | Star s -> (
+        Prod (brz_d t a s, Star s)
+      )
 
 end
 
@@ -55,6 +80,7 @@ and aci_normalize expr =
    without violating that, then equivalent. *)
 let are_equivalent e1 e2 = 
   let brz_e = Brz_e.create in 
+  let brz_d = Brz_d.create in 
   let unioned_alphabet = Expr.alphabet e1 |> List.append (Expr.alphabet e2) |> Core.List.dedup_and_sort ~compare:Char.compare in
   let r = ref Expr_pair_set.empty in 
   let todo : (Expr.t * Expr.t) Queue.t = Queue.create () in 
@@ -69,7 +95,7 @@ let are_equivalent e1 e2 =
       let e_s2 = Brz_e.brz_e brz_e (s2) in 
       if e_s1 = e_s2 then 
         List.iter (fun a -> 
-                      Queue.push ((brz_d a s1), (brz_d a s2)) todo) unioned_alphabet;
+                      Queue.push ((Brz_d.brz_d brz_d a s1), (Brz_d.brz_d brz_d a s2)) todo) unioned_alphabet;
         r := Expr_pair_set.add (s1, s2) !r 
       else 
         ans := false; 
