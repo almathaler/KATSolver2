@@ -11,8 +11,8 @@ let () =
     (
     let exp1 = Array.get Sys.argv 1 in 
     let exp2 = Array.get Sys.argv 2 in 
-    Printf.printf "First expression: %s \n" exp1;
-    Printf.printf "Second expression: %s \n" exp2;
+    (* Printf.printf "First expression: %s \n" exp1; *)
+    (* Printf.printf "Second expression: %s \n" exp2; *)
     let parsed_exp1 = parse exp1 in 
     let printable_exp1 = parsed_exp1|> Expr.sexp_of_t |> Core.Sexp.to_string_hum in 
     let parsed_exp2 = parse exp2 in 
@@ -25,7 +25,7 @@ let () =
     | false, Some w1, Some w2 -> 
       let printable_w1 =  w1 |> Expr.sexp_of_t |> Core.Sexp.to_string_hum in 
       let printable_w2 =  w2 |> Expr.sexp_of_t |> Core.Sexp.to_string_hum in 
-      Printf.printf "Exp1 can reach %s, Exp2 reaches %s in the same sequence of steps, but these do not have the same EWP \n" printable_w1 printable_w2
+      Printf.printf "Not Equivalent. \nExp1 can reach %s, Exp2 reaches %s in the same sequence of steps, but these do not have the same EWP \n" printable_w1 printable_w2
     | _ -> print_endline "Error. Equivalence and witness Option do not match"
     )
   else
