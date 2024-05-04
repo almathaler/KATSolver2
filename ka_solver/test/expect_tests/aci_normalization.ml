@@ -173,3 +173,17 @@ let%expect_test "abc* + abc* + (axy(z+a))" =
       (Prod
        ((Prod ((Prod ((Prim a) (Prim x))) (Prim y))) (Sum ((Prim a) (Prim z)))))))
     |}]
+
+let%expect_test "(a+b)+(ab)" = 
+  test "(a+b)+(ab)"; 
+  [%expect {|
+    (Sum ((Sum ((Prim a) (Prim b))) (Prod ((Prim a) (Prim b)))))
+    After aci_norm:
+    (Sum ((Sum ((Prim a) (Prod ((Prim a) (Prim b))))) (Prim b))) |}]
+
+let%expect_test "(a*)+a" = 
+  test "(a*)+a"; 
+  [%expect {|
+    (Sum ((Star (Prim a)) (Prim a)))
+    After aci_norm:
+    (Star (Prim a)) |}]
