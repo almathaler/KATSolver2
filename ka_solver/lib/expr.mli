@@ -16,6 +16,6 @@ type t =
     This is for ease of alphabetizing subterms in ACI normalization *)
 val compare : t -> t -> int
 
-val leftmost_char : t -> char 
+val chars : t -> string 
 
 val sexp_of_t : t -> Sexp.t 

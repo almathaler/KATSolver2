@@ -9,16 +9,22 @@ type t =
 | Star of t
 [@@deriving sexp]
 
-let rec leftmost_char = function 
+(* let rec leftmost_char = function 
   | Zero -> '0' 
   | One -> '1' 
   | Prim c -> c 
   | Sum (e1, _) -> leftmost_char e1 
   | Prod (e1, _) -> leftmost_char e1 
-  | Star e -> leftmost_char e
+  | Star e -> leftmost_char e *)
 
-(* TODO: CHANGE THIS! *)
+let rec chars = function 
+  | Zero -> "0" 
+  | One -> "1" 
+  | Prim c -> Char.to_string c 
+  | Star e -> chars e
+  | Sum (e1, e2) | Prod (e1, e2) -> (chars e1) ^ (chars e2)
+
 let compare e1 e2 = 
-  Char.compare (leftmost_char e1) (leftmost_char e2) 
+  String.compare (chars e1) (chars e2)
 
 let sexp_of_t = sexp_of_t
