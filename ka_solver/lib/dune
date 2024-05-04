@@ -9,6 +9,7 @@
   expr_with_sum_subterms
   expr_with_prod_subterms
   expr_set
+  expr_pair_set
   equivalence_checker
   parser
   lexer))

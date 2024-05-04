@@ -1,9 +1,9 @@
 let _e_memo : (Expr.t, int) Hashtbl.t = Hashtbl.create 16 
 let _d_memo : (Expr.t, Expr.t) Hashtbl.t = Hashtbl.create 16 
 
-let _brz_e _ : Expr.t -> int = failwith "todo"
+let brz_e _  = failwith "todo"
 
-let _brz_d _ _ : char -> Expr.t -> Expr.t = failwith "todo"
+let brz_d _ _  = failwith "todo"
 
 let rec reassociate subterms constructor = 
   List.fold_left (fun acc subterm -> constructor acc (aci_normalize subterm)) 
@@ -35,4 +35,32 @@ and aci_normalize expr =
   | Expr.Sum _ -> aci_plus expr
   | _ -> expr (* Nothing to normalize *)
 
-let are_equivalent _ _ = failwith "todo"
+
+(* From Pous. This func. attempts to find a bisimulation (r). If it encounters 
+   two states (s1, s2) reached via the same input from e1 and e2 respectively 
+   such that their obs is different, fails. If can explore the whole automata
+   without violating that, then equivalent. *)
+let are_equivalent e1 e2 = 
+  let unioned_alphabet = Expr.alphabet e1 |> List.append (Expr.alphabet e2) |> Core.List.dedup_and_sort ~compare:Char.compare in
+  let r = ref Expr_pair_set.empty in 
+  let todo : (Expr.t * Expr.t) Queue.t = Queue.create () in 
+  Queue.push (e1, e2) todo;
+  let ans = ref true in 
+  let witness_state1 = ref Option.None in 
+  let witness_state2 = ref Option.None in 
+  while not (Queue.is_empty todo) do 
+    let (s1, s2) = Queue.pop todo in 
+    if not (Expr_pair_set.mem (s1, s2) !r) then 
+      let e_s1 = brz_e(s1) in 
+      let e_s2 = brz_e(s2) in 
+      if e_s1 = e_s2 then 
+        List.iter (fun a -> 
+                      Queue.push ((brz_d a s1), (brz_d a s2)) todo) unioned_alphabet;
+        r := Expr_pair_set.add (s1, s2) !r 
+      else 
+        ans := false; 
+        witness_state1 := Option.Some s1; 
+        witness_state2 := Option.Some s2; 
+        Queue.clear todo 
+  done;
+  (!ans, !witness_state1, !witness_state2)

@@ -18,6 +18,7 @@ val to_string : t -> string
     This is for ease of alphabetizing subterms in ACI normalization *)
 val compare : t -> t -> int
 
-val chars : t -> string 
+(** Returns list of chars present in expr, no dupes *)
+val alphabet : t -> char list 
 
 val sexp_of_t : t -> Sexp.t 

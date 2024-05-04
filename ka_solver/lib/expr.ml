@@ -23,12 +23,15 @@ let rec to_string = function
   | Sum (e1, e2) -> (to_string e1) ^ "+" ^ (to_string e2) 
   | Prod (e1, e2) -> "(" ^ (to_string e1) ^ ")(" ^ (to_string e2) ^ ")"
 
-let rec chars = function 
-  | Zero -> "0" 
-  | One -> "1" 
-  | Prim c -> Char.to_string c 
-  | Star e -> chars e
-  | Sum (e1, e2) | Prod (e1, e2) -> (chars e1) ^ (chars e2)
+let rec alphabet_helper = function 
+  | Zero -> ['0'] 
+  | One -> ['1']
+  | Prim c -> [c] 
+  | Star e -> alphabet_helper e
+  | Sum (e1, e2) | Prod (e1, e2) -> List.append (alphabet_helper e1) (alphabet_helper e2)
+
+let alphabet e = 
+  (alphabet_helper e) |> List.dedup_and_sort ~compare:Char.compare 
 
 let compare e1 e2 = 
   String.compare (to_string e1) (to_string e2)
