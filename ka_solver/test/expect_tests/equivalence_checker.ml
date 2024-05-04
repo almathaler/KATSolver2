@@ -19,3 +19,7 @@ let%expect_test "a, 1a" =
 let%expect_test "a, ab" =
   test_basic "a" "ab";
   [%expect{| Are equivalent?: false |}]
+
+let%expect_test "a, b" = 
+  test_basic "a" "b"; 
+  [%expect{| Are equivalent?: false |}]
