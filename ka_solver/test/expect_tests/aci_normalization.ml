@@ -159,7 +159,6 @@ let%expect_test "abc* + abc* + (cxy(z+a))" =
       (Prod
        ((Prod ((Prod ((Prim c) (Prim x))) (Prim y))) (Sum ((Prim a) (Prim z))))))) |}]
 
-(* TODO: THIS FAILS b/c of bad comp in expr *)
 let%expect_test "abc* + abc* + (axy(z+a))" = 
   test "abc* + abc* + (axy(z+a))";
   [%expect{|
