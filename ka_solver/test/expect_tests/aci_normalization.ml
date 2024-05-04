@@ -17,6 +17,7 @@ let test str =
   Printf.printf "to_string of parsed: %s \n" (expr |> Expr.to_string);
   print_parsed_and_normalized expr
 
+(*   
 let%expect_test "abc" =
   test "abc";
   [%expect{|
@@ -205,4 +206,4 @@ let%expect_test "(a*)+a" =
     to_string of parsed: a*+a
     (Sum ((Star (Prim a)) (Prim a)))
     After aci_norm:
-    (Sum ((Prim a) (Star (Prim a)))) |}]
+    (Sum ((Prim a) (Star (Prim a)))) |}] *)

@@ -11,8 +11,8 @@ let () =
     (
     let exp1 = Array.get Sys.argv 1 in 
     let exp2 = Array.get Sys.argv 2 in 
-    (* Printf.printf "First expression: %s \n" exp1; *)
-    (* Printf.printf "Second expression: %s \n" exp2; *)
+    Printf.printf "First expression: %s \n" exp1; 
+    Printf.printf "Second expression: %s \n" exp2;
     let parsed_exp1 = parse exp1 in 
     let printable_exp1 = parsed_exp1|> Expr.sexp_of_t |> Core.Sexp.to_string_hum in 
     let parsed_exp2 = parse exp2 in 

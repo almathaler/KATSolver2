@@ -21,3 +21,7 @@ let%expect_test "ab(c+d*)*" =
 let%expect_test "a0(c+1*)*" =
 "a0(c+1*)*" |> parse |> Expr.sexp_of_t |> Core.Sexp.to_string_hum |> print_endline;
 [%expect{| (Prod ((Prim a) (Prod (Zero (Star (Sum ((Prim c) (Star One)))))))) |}]
+
+let%expect_test "1a1" = 
+"1a1" |> parse |> Expr.sexp_of_t |> Core.Sexp.to_string_hum |> print_endline; 
+[%expect{||}]
