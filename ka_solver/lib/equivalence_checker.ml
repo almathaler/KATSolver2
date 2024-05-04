@@ -1,9 +1,22 @@
-let _e_memo : (Expr.t, int) Hashtbl.t = Hashtbl.create 16 
-let _d_memo : (Expr.t, Expr.t) Hashtbl.t = Hashtbl.create 16 
-
-let brz_e _  = failwith "todo"
-
 let brz_d _ _  = failwith "todo"
+
+module Brz_e = struct 
+  type t = (Expr.t, int) Hashtbl.t
+
+  let create : t = Hashtbl.create 16 
+
+  let rec brz_e t (expr : Expr.t) = 
+    try Hashtbl.find t expr with 
+    Not_found -> 
+      match expr with 
+      | Prim _ -> 0 
+      | Zero -> 0 
+      | One -> 1 
+      | Sum (e1, e2) -> Int.logor (brz_e t e1) (brz_e t e2)
+      | Prod (e1, e2) -> Int.logand (brz_e t e1) (brz_e t e2) 
+      | Star _ -> 1 
+
+end
 
 let rec reassociate subterms constructor = 
   List.fold_left (fun acc subterm -> constructor acc (aci_normalize subterm)) 
@@ -41,6 +54,7 @@ and aci_normalize expr =
    such that their obs is different, fails. If can explore the whole automata
    without violating that, then equivalent. *)
 let are_equivalent e1 e2 = 
+  let brz_e = Brz_e.create in 
   let unioned_alphabet = Expr.alphabet e1 |> List.append (Expr.alphabet e2) |> Core.List.dedup_and_sort ~compare:Char.compare in
   let r = ref Expr_pair_set.empty in 
   let todo : (Expr.t * Expr.t) Queue.t = Queue.create () in 
@@ -51,8 +65,8 @@ let are_equivalent e1 e2 =
   while not (Queue.is_empty todo) do 
     let (s1, s2) = Queue.pop todo in 
     if not (Expr_pair_set.mem (s1, s2) !r) then 
-      let e_s1 = brz_e(s1) in 
-      let e_s2 = brz_e(s2) in 
+      let e_s1 = Brz_e.brz_e brz_e (s1) in 
+      let e_s2 = Brz_e.brz_e brz_e (s2) in 
       if e_s1 = e_s2 then 
         List.iter (fun a -> 
                       Queue.push ((brz_d a s1), (brz_d a s2)) todo) unioned_alphabet;
