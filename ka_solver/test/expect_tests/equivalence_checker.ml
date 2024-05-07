@@ -66,13 +66,13 @@ let%expect_test "(x+y)z, xz+yz" =
   [%expect {| Are equivalent?: true |}]
 
 (* Star equational axioms *)
-(* let%expect_test "1+xx*+x*, x*" = 
+let%expect_test "1+xx*+x*, x*" = 
   test_basic "1+xx*+x*" "x*"; 
-  [%expect {| Are equivalent?: true |}] *)
+  [%expect {| Are equivalent?: true |}]
 
-(* let%expect_test "1+x*x+x*, x*" = 
+let%expect_test "1+x*x+x*, x*" = 
   test_basic "1+x*x+x*" "x*"; 
-  [%expect {| Are equivalent?: true |}] *)
+  [%expect {| Are equivalent?: true |}]
 
 (* Others *)
 let%expect_test "a, ab" =
