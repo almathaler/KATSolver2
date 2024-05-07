@@ -93,7 +93,7 @@ let are_equivalent e1 e2 =
   let brz_e = Brz_e.create in 
   let brz_d = Brz_d.create in 
   let unioned_alphabet = Expr.alphabet e1 |> List.append (Expr.alphabet e2) |> Core.List.dedup_and_sort ~compare:Char.compare in
-  Printf.printf "Unioned alphabet: {%s} \n" (List.fold_left (fun acc a -> acc ^ (String.make 1 a) ^ "; ") "" unioned_alphabet);
+  (* Printf.printf "Unioned alphabet: {%s} \n" (List.fold_left (fun acc a -> acc ^ (String.make 1 a) ^ "; ") "" unioned_alphabet); *)
   let r = ref Expr_pair_set.empty in 
   let todo : (Expr.t * Expr.t) Queue.t = Queue.create () in 
   Queue.push (e1, e2) todo;

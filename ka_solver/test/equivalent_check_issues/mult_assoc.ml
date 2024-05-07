@@ -49,13 +49,16 @@ let%expect_test "x(yz) and (xy)z aci normalize" =
 
 let%expect_test "x(yz) brz_e" = 
   print_brze "x(yz)"; 
-  [%expect {||}]
+  [%expect {| brz_e: 0 |}]
 
 let%expect_test "x(yz) brz_d for x, y, z" = 
   print_brzd 'x' "x(yz)";
   print_brzd 'y' "x(yz)";
   print_brzd 'z' "x(yz)"; 
-  [%expect {||}]
+  [%expect {|
+    brz_d, x: (Sum ((Prod ((Sum ((Prod (Zero Zero)) (Prim y))) (Prim z))) Zero))
+    brz_d, y: (Sum ((Prod ((Sum ((Prod (Zero One)) Zero)) (Prim z))) Zero))
+    brz_d, z: (Sum ((Prod ((Sum ((Prod (Zero Zero)) Zero)) (Prim z))) Zero)) |}]
 
 (* let%expect_test "x(yz) and (xy)z equivalent" = 
   print_equiv "x(yz)" "(xy)z"; 
