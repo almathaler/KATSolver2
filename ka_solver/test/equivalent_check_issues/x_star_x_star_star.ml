@@ -33,33 +33,46 @@ let print_brzd a str1 =
   norm_e1 |> (Equivalence_checker.Brz_d.brz_d brz_d a) |> Expr.sexp_of_t 
           |> Core.Sexp.to_string_hum |> Printf.printf "brz_d, %c: %s \n" a
 
-let%expect_test "x(yz) and (xy)z parse" = 
-  print_parsed "x(yz)"; 
-  print_parsed "(xy)z"; 
+let%expect_test "x* and x** parsing"=
+  print_endline "x*:"; 
+  print_parsed "x*"; 
+  print_endline "x**:";
+  print_parsed "x**"; 
   [%expect {|
-    (Prod ((Prim x) (Prod ((Prim y) (Prim z)))))
-    (Prod ((Prod ((Prim x) (Prim y))) (Prim z))) |}]
+    x*:
+    (Star (Prim x))
+    x**:
+    (Star (Star (Prim x))) |}]
 
-let%expect_test "x(yz) and (xy)z aci normalize" = 
-  print_normalized "x(yz)"; 
-  print_normalized "(xy)z"; 
+let%expect_test "x* and x** normalize" = 
+  print_endline "x*:"; 
+  print_normalized "x*"; 
+  print_endline "x**:";
+  print_normalized "x**";
   [%expect {|
-    (Prod ((Prod ((Prim x) (Prim y))) (Prim z)))
-    (Prod ((Prod ((Prim x) (Prim y))) (Prim z))) |}]
+    x*:
+    (Star (Prim x))
+    x**:
+    (Star (Star (Prim x))) |}] 
 
-let%expect_test "x(yz) brz_e" = 
-  print_brze "x(yz)"; 
-  [%expect {| brz_e: 0 |}]
-
-let%expect_test "x(yz) brz_d for x, y, z" = 
-  print_brzd 'x' "x(yz)";
-  print_brzd 'y' "x(yz)";
-  print_brzd 'z' "x(yz)"; 
+let%expect_test "x* and x** brz_e" =
+  print_endline "x*:";
+  print_brze "x*"; 
+  print_endline "x**"; 
+  print_brze "x**"; 
   [%expect {|
-    brz_d, x: (Sum ((Prod ((Sum ((Prod (Zero Zero)) (Prim y))) (Prim z))) Zero))
-    brz_d, y: (Sum ((Prod ((Sum ((Prod (Zero One)) Zero)) (Prim z))) Zero))
-    brz_d, z: (Sum ((Prod ((Sum ((Prod (Zero Zero)) Zero)) (Prim z))) Zero)) |}]
+    x*:
+    brz_e: 1
+    x**
+    brz_e: 1 |}]
 
-(* let%expect_test "x(yz) and (xy)z equivalent" = 
-  print_equiv "x(yz)" "(xy)z"; 
-  [%expect {||}] *)
+let%expect_test "x* and x** brz_d x" =
+  print_endline "x*:";
+  print_brzd 'x' "x*"; 
+  print_endline "x**"; 
+  print_brzd 'x' "x**"; 
+  [%expect {|
+    x*:
+    brz_d, x: (Star (Prim x))
+    x**
+    brz_d, x: (Prod ((Star (Prim x)) (Star (Star (Prim x))))) |}]
