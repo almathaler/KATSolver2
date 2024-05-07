@@ -55,7 +55,6 @@ let rec reassociate subterms constructor =
   List.fold_left (fun acc subterm -> constructor acc (aci_normalize subterm)) 
     (subterms |> List.hd) (subterms |> List.tl)
 
-    (* TODO *)
 and aci_plus expr  = 
   let subtermed_expr = Expr_with_sum_subterms.create_from_expr expr in 
   (* Now we want to delete duplicates, order alphabetically, 
@@ -75,9 +74,9 @@ and aci_times expr =
 and aci_normalize expr = 
   match expr with 
   | Expr.Prod (Zero, _)  | Expr.Prod (_, Zero) -> Zero 
-  | Expr.Prod (One, e) | Expr.Prod (e, One) -> e 
+  | Expr.Prod (One, e) | Expr.Prod (e, One) -> aci_normalize e 
   | Expr.Prod _ -> aci_times expr 
-  | Expr.Sum (Zero, e) | Expr.Sum (e, Zero) -> e
+  | Expr.Sum (Zero, e) | Expr.Sum (e, Zero) -> aci_normalize e
   | Expr.Sum _ -> aci_plus expr
   | _ -> expr (* Nothing to normalize *)
 

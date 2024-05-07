@@ -23,9 +23,9 @@ let%expect_test "1a1" =
     to_string of parsed: (1)((a)(1))
     (Prod (One (Prod ((Prim a) One))))
     After aci_norm:
-    (Prod ((Prim a) One)) |}]
-(*   
-let%expect_test "abc" 
+    (Prim a) |}]
+  
+let%expect_test "abc" =
   test "abc";
   [%expect{|
     to_string of parsed: (a)((b)(c))
@@ -213,4 +213,4 @@ let%expect_test "(a*)+a" =
     to_string of parsed: a*+a
     (Sum ((Star (Prim a)) (Prim a)))
     After aci_norm:
-    (Sum ((Prim a) (Star (Prim a)))) |}] *)
+    (Sum ((Prim a) (Star (Prim a)))) |}]
