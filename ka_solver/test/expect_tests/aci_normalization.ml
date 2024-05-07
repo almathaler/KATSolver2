@@ -194,7 +194,7 @@ let%expect_test "abc* + abc* + (cxy(z+a))" =
        ((Prim c) (Prod ((Prim x) (Prod ((Prim y) (Sum ((Prim z) (Prim a)))))))))))
     After aci_norm:
     (Sum
-     ((Prod ((Prim a) (Prod ((Prim b) (Star (Prim c))))))
+     ((Prod ((Prod ((Prim a) (Prim b))) (Star (Prim c))))
       (Prod
        ((Prod ((Prod ((Prim c) (Prim x))) (Prim y))) (Sum ((Prim a) (Prim z))))))) |}]
 
@@ -210,7 +210,7 @@ let%expect_test "abc* + abc* + (axy(z+a))" =
        ((Prim a) (Prod ((Prim x) (Prod ((Prim y) (Sum ((Prim z) (Prim a)))))))))))
     After aci_norm:
     (Sum
-     ((Prod ((Prim a) (Prod ((Prim b) (Star (Prim c))))))
+     ((Prod ((Prod ((Prim a) (Prim b))) (Star (Prim c))))
       (Prod
        ((Prod ((Prod ((Prim a) (Prim x))) (Prim y))) (Sum ((Prim a) (Prim z)))))))
     |}]

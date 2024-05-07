@@ -1,6 +1,6 @@
-let rec reassociate subterms constructor = 
+let rec reassociate_and_normalize subterms constructor = 
   List.fold_left (fun acc subterm -> constructor acc (aci_normalize subterm)) 
-    (subterms |> List.hd) (subterms |> List.tl)
+    (subterms |> List.hd |> aci_normalize) (subterms |> List.tl)
 
 and aci_plus expr  = 
   let subtermed_expr = Expr_with_sum_subterms.create_from_expr expr in 
@@ -9,13 +9,13 @@ and aci_plus expr  =
   let subterms = Expr_with_sum_subterms.subterms subtermed_expr in 
   let no_dupes_subterms = Expr_set.to_list subterms in 
   let alphabetized_and_no_dupes_subterms = List.stable_sort Expr.compare no_dupes_subterms in
-  reassociate alphabetized_and_no_dupes_subterms (fun e1 e2 -> Expr.Sum (e1, e2))
+  reassociate_and_normalize alphabetized_and_no_dupes_subterms (fun e1 e2 -> Expr.Sum (e1, e2))
 
 and aci_times expr =
   let subtermed_expr = Expr_with_prod_subterms.create_from_expr expr in 
   (* Now we want to re-associate to the left *)
   let subterms = Expr_with_prod_subterms.subterms subtermed_expr in 
-  reassociate subterms (fun e1 e2 -> Expr.Prod (e1, e2))
+  reassociate_and_normalize subterms (fun e1 e2 -> Expr.Prod (e1, e2))
 
 
 and aci_normalize expr = 

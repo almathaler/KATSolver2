@@ -92,9 +92,9 @@ let%expect_test "x*, x*x*" =
   test_basic "x*" "x*x*"; 
   [%expect {| Are equivalent?: true |}]
 
-(* let%expect_test "x*, x**" = (* This maybe doesn't work b/c of set equality *)
+let%expect_test "x*, x**" = (* This maybe doesn't work b/c of set equality *)
   test_basic "x*" "x**"; 
-  [%expect {| Are equivalent?: true |}] *)
+  [%expect {| Are equivalent?: true |}]
 
 let%expect_test "(xy)*x, x(yx)*" = 
   test_basic "(xy)*x" "x(yx)*"; 

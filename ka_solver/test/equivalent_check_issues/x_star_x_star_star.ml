@@ -76,3 +76,24 @@ let%expect_test "x* and x** brz_d x" =
     brz_d, x: (Star (Prim x))
     x**
     brz_d, x: (Prod ((Star (Prim x)) (Star (Star (Prim x))))) |}]
+
+let%expect_test "x* and x*x** brz_e and brz_d x" = 
+  print_endline "brz_e x*:";
+  print_brze "x*"; 
+  print_endline "brz_d x x*"; 
+  print_brzd 'x' "x*"; 
+  print_endline "brz_e x*x**"; 
+  print_brze "x*x**"; 
+  print_endline "brz_d x x*x**"; 
+  print_brzd 'x' "x*x**";
+  [%expect {|
+    brz_e x*:
+    brz_e: 1
+    brz_d x x*
+    brz_d, x: (Star (Prim x))
+    brz_e x*x**
+    brz_e: 1
+    brz_d x x*x**
+    brz_d, x: (Sum
+     ((Prod ((Star (Prim x)) (Star (Star (Prim x)))))
+      (Prod ((Star (Prim x)) (Star (Star (Prim x))))))) |}] 
