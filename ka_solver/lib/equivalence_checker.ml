@@ -88,8 +88,8 @@ and aci_normalize expr =
 let are_equivalent e1 e2 = 
   let e1 = aci_normalize e1 in 
   let e2 = aci_normalize e2 in 
-  Printf.printf "ACI normalized e1: %s \n" (Expr.to_string e1); 
-  Printf.printf "ACI normalized e2: %s \n" (Expr.to_string e2);
+  (* Printf.printf "ACI normalized e1: %s \n" (Expr.to_string e1);  *)
+  (* Printf.printf "ACI normalized e2: %s \n" (Expr.to_string e2); *)
   let brz_e = Brz_e.create in 
   let brz_d = Brz_d.create in 
   let unioned_alphabet = Expr.alphabet e1 |> List.append (Expr.alphabet e2) |> Core.List.dedup_and_sort ~compare:Char.compare in
