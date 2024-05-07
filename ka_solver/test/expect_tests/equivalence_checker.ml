@@ -87,3 +87,15 @@ let%expect_test "a, 1a1" =
   test_basic "a" "1a1"; 
   [%expect{| Are equivalent?: true |}]
 
+(* From homework 2 *)
+let%expect_test "x*, x*x*" = 
+  test_basic "x*" "x*x*"; 
+  [%expect {| Are equivalent?: true |}]
+
+(* let%expect_test "x*, x**" = 
+  test_basic "x*" "x**"; 
+  [%expect {| Are equivalent?: true |}] *)
+
+(* let%expect_test "(xy)*x, x(yx)*" = 
+  test_basic "(xy)*x" "x(yx)*"; 
+  [%expect {| Are equivalent?: true |}] *)
