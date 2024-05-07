@@ -24,4 +24,4 @@ let%expect_test "a0(c+1*)*" =
 
 let%expect_test "1a1" = 
 "1a1" |> parse |> Expr.sexp_of_t |> Core.Sexp.to_string_hum |> print_endline; 
-[%expect{||}]
+[%expect{| (Prod (One (Prod ((Prim a) One)))) |}]
