@@ -103,3 +103,7 @@ let%expect_test "(xy)*x, x(yx)*" =
 let%expect_test "(x+y)*, x*(yx*)*" = 
   test_basic "(x+y)*" "x*(yx*)*"; 
   [%expect {| Are equivalent?: true |}]
+
+let%expect_test "x*, (1+x)(1+x)(xxx)*" = 
+  test_basic "x*" "(1+x)(1+x)(xxx)*"; 
+  [%expect {| Are equivalent?: true |}]
