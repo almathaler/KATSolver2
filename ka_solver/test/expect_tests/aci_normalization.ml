@@ -17,6 +17,22 @@ let test str =
   Printf.printf "to_string of parsed: %s \n" (expr |> Expr.to_string);
   print_parsed_and_normalized expr
 
+let%expect_test "x(yz)" = 
+  test "x(yz)"; 
+  [%expect {|
+    to_string of parsed: (x)((y)(z))
+    (Prod ((Prim x) (Prod ((Prim y) (Prim z)))))
+    After aci_norm:
+    (Prod ((Prod ((Prim x) (Prim y))) (Prim z))) |}]
+
+let%expect_test "(xy)z" = 
+  test "(xy)z"; 
+  [%expect {|
+    to_string of parsed: ((x)(y))(z)
+    (Prod ((Prod ((Prim x) (Prim y))) (Prim z)))
+    After aci_norm:
+    (Prod ((Prod ((Prim x) (Prim y))) (Prim z))) |}]
+
 let%expect_test "1a1" = 
   test "1a1"; 
   [%expect {|

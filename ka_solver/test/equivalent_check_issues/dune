@@ -1,0 +1,6 @@
+(library
+ (name equivalent_check_issues)
+ (libraries core ka_solver)
+ (inline_tests)
+ (preprocess
+  (pps ppx_expect ppx_assert)))
