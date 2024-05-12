@@ -16,7 +16,7 @@ rule read =
             if String.length str > 1 then failwith "test primitive read as more than one char"
             else String.get str 0
     )}
-    | kprim {TPRIM (
+    | kprim {KPRIM (
         let str = Lexing.lexeme lexbuf in 
             if String.length str > 1 then failwith "test primitive read as more than one char"
             else String.get str 0

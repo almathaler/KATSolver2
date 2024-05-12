@@ -2,6 +2,8 @@
  (name kat_solver)
  (public_name kat_solver)
  (libraries core)
+ (preprocess
+  (pps ppx_sexp_conv))
  (modules bdd expr hashcons lexer parser sym_expr test))
 
 (menhir
