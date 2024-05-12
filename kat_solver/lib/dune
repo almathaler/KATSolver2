@@ -2,9 +2,4 @@
  (name kat_solver)
  (public_name kat_solver)
  (libraries core)
- (modules parser lexer))
-
-(menhir
- (modules parser))
-
-(ocamllex lexer)
+ (modules bdd expr hashcons test))
