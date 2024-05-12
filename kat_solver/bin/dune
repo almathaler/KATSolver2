@@ -1,0 +1,4 @@
+(executable
+ (public_name kat_solver)
+ (name main)
+ (libraries core kat_solver))
