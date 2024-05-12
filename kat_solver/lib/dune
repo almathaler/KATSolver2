@@ -1,2 +1,10 @@
 (library
- (name kat_solver))
+ (name kat_solver)
+ (public_name kat_solver)
+ (libraries core)
+ (modules parser lexer))
+
+(menhir
+ (modules parser))
+
+(ocamllex lexer)
