@@ -2,4 +2,9 @@
  (name kat_solver)
  (public_name kat_solver)
  (libraries core)
- (modules bdd expr hashcons sym_expr test))
+ (modules bdd expr hashcons lexer parser sym_expr test))
+
+(menhir
+ (modules parser))
+
+(ocamllex lexer)
