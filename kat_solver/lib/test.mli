@@ -12,3 +12,5 @@ type t =
 val sexp_of_t : t -> Sexp.t
 
 val t_of_sexp : Sexp.t -> t 
+
+val to_bdd : t -> (char, bool) Bdd.t

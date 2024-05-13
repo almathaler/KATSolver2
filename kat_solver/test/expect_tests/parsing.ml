@@ -52,3 +52,12 @@ let%expect_test "a*" =
 let%expect_test "x*" = 
   test "x*";
   [%expect {| (Star (Prim x)) |}]
+
+let%expect_test "x*+!(ab)y+ayb" = 
+  test "x*+!(ab)y+ayb";
+  [%expect {|
+    (Sum
+     ((Sum
+       ((Star (Prim x))
+        (Prod ((Test (Not (Land ((Prim a) (Prim b))))) (Prim y)))))
+      (Prod ((Test (Prim a)) (Prod ((Prim y) (Test (Prim b)))))))) |}]

@@ -1,6 +1,26 @@
-(** From fig. 2 of Pous. 'b is the type of the leaves and 'a is the 
-    type of the decision nodes *)
-type ('a, 'b) node = ('a, 'b) descr Hashcons.hash_consed 
-and ('a, 'b) descr = V of 'b | N of 'a * ('a, 'b) node * ('a, 'b) node 
+open Core
 
+type ('a, 'b) node = V of 'b | N of 'a * ('a, 'b) node * ('a, 'b) node 
+[@@deriving sexp]
 type ('a, 'b) t = ('a, 'b) node
+[@@deriving sexp]
+
+let sexp_of_t = sexp_of_t
+
+let constant v = V (v) 
+
+let node a l r = 
+    if l==r then l else N (a, l, r)
+
+let rec apply (f: 'b -> 'b -> 'b) (left: ('a, 'b) t) (right : ('a, 'b) t) = 
+    match (left, right) with 
+    | V v, V w -> constant (f v w)
+    | N(a, l, r), V _ -> node a (apply f l right) (apply f r right) 
+    | V _, N(a, l, r) -> node a (apply f left l) (apply f left r)
+    | N(a, l, r), N(a', l', r') -> 
+        if a=a' then (node a (apply f l l') (apply f r r'))
+        else if a<a' then (node a (apply f l right) (apply f r right))
+        else (node a' (apply f left l') (apply f left r'))
+
+        
+        
