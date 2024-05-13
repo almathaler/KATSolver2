@@ -31,3 +31,5 @@ let rec apply_single (f: 'b -> 'b) (bdd : ('a, 'b) t) : ('a, 'b) t =
 let negate bdd = apply_single (not) bdd
 
 let logical_or l r = apply (||) l r
+
+let logical_and l r = apply (&&) l r

@@ -29,3 +29,6 @@ val negate : ('a, bool) t -> ('a, bool) t
 (** LORs two boolean trees *)
 val logical_or : ('a, bool) t -> ('a, bool) t -> ('a, bool) t 
 
+(** LANDs two boolean trees *)
+val logical_and : ('a, bool) t -> ('a, bool) t -> ('a, bool) t
+

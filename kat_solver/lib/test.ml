@@ -18,6 +18,8 @@ let prim_to_bdd c =
 let rec to_bdd t = 
   match t with 
   | Prim c -> prim_to_bdd c
-  | Not t -> Bdd.negate (to_bdd t)
+  | Zero -> (Bdd.constant false)
+  | One -> (Bdd.constant true) 
+  | Land (l, r) -> Bdd.logical_and (to_bdd l) (to_bdd r)
   | Lor (l, r) -> Bdd.logical_or (to_bdd l) (to_bdd r)
-  | _ -> failwith "todo"
+  | Not t -> Bdd.negate (to_bdd t)

@@ -33,3 +33,12 @@ let%expect_test "!!(a+b+!!(c+d))" =
   test "!!(a+b+!!(c+d))";
   [%expect {|
     (N a (N b (N c (N d (V false) (V true)) (V true)) (V true)) (V true)) |}]
+
+let%expect_test "!!(d+c+!!(b+a))" = 
+  test "!!(d+c+!!(b+a))";
+  [%expect {|
+    (N a (N b (N c (N d (V false) (V true)) (V true)) (V true)) (V true)) |}]
+
+let%expect_test "!!(ab)" = 
+  test "!!(ab)"; 
+  [%expect {| (N a (V false) (N b (V false) (V true))) |}]
