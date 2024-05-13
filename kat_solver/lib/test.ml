@@ -19,4 +19,5 @@ let rec to_bdd t =
   match t with 
   | Prim c -> prim_to_bdd c
   | Not t -> Bdd.negate (to_bdd t)
+  | Lor (l, r) -> Bdd.logical_or (to_bdd l) (to_bdd r)
   | _ -> failwith "todo"

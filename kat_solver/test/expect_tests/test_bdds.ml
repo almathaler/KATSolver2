@@ -16,3 +16,20 @@ let%expect_test "a" =
 let%expect_test "!a" = 
   test "!a";
   [%expect {| (N a (V true) (V false)) |}]
+
+let%expect_test "!(a+b)" = 
+  test "!(a+b)"; 
+  [%expect {| (N a (N b (V true) (V false)) (V false)) |}]
+
+let%expect_test "!!(a+b)" = 
+  test "!!(a+b)"; 
+  [%expect {| (N a (N b (V false) (V true)) (V true)) |}]
+
+let%expect_test "!!(b+a)" = 
+  test "!!(b+a)"; 
+  [%expect {| (N a (N b (V false) (V true)) (V true)) |}]
+
+let%expect_test "!!(a+b+!!(c+d))" = 
+  test "!!(a+b+!!(c+d))";
+  [%expect {|
+    (N a (N b (N c (N d (V false) (V true)) (V true)) (V true)) (V true)) |}]
