@@ -26,12 +26,12 @@ let%expect_test "xy" =
   [%expect {| (Prod ((Prim x) (Prim y))) |}]
 
 let%expect_test "!(ab)" = 
-  test "!ab"; 
-  [%expect {| (Prod ((Test (Not (Prim a))) (Test (Prim b)))) |}]
+  test "!(ab)"; 
+  [%expect {| (Test (Not (Land ((Prim a) (Prim b))))) |}]
 
 let%expect_test "!(a+b)" = 
-  test "!a+b"; 
-  [%expect {| (Sum ((Test (Not (Prim a))) (Test (Prim b)))) |}]
+  test "!(a+b)"; 
+  [%expect {| (Test (Not (Lor ((Prim a) (Prim b))))) |}]
 
 let%expect_test "x + !(ab)" = 
   test "x + !(ab)"; 
