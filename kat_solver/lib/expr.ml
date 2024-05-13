@@ -9,3 +9,7 @@ type t =
 [@@deriving sexp]
 
 let sexp_of_t = sexp_of_t
+
+let to_bdd = function 
+| Test t -> Test.to_bdd t 
+| _ -> failwith "Can't transform non-test to bdd"

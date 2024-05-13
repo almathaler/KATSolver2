@@ -8,3 +8,6 @@ type t =
 | Test of Test.t
 
 val sexp_of_t : t -> Sexp.t 
+
+(** FOR TESTING *)
+val to_bdd : t -> (char, bool) Bdd.t
