@@ -10,7 +10,7 @@ let sexp_of_t = sexp_of_t
 let constant v = V (v) 
 
 let node a l r = 
-    if l==r then l else N (a, l, r)
+    if (phys_equal l r) then l else N (a, l, r)
 
 let rec apply (f: 'b -> 'b -> 'b) (left: ('a, 'b) t) (right : ('a, 'b) t) = 
     match (left, right) with 
@@ -18,9 +18,10 @@ let rec apply (f: 'b -> 'b -> 'b) (left: ('a, 'b) t) (right : ('a, 'b) t) =
     | N(a, l, r), V _ -> node a (apply f l right) (apply f r right) 
     | V _, N(a, l, r) -> node a (apply f left l) (apply f left r)
     | N(a, l, r), N(a', l', r') -> 
-        if a=a' then (node a (apply f l l') (apply f r r'))
-        else if a<a' then (node a (apply f l right) (apply f r right))
-        else (node a' (apply f left l') (apply f left r'))
+        match Stdlib.compare a a' with 
+        | 0 -> (node a (apply f l l') (apply f r r'))
+        | -1 -> (node a (apply f l right) (apply f r right))
+        | _ -> (node a' (apply f left l') (apply f left r'))
 
         
         
