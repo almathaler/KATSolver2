@@ -23,3 +23,16 @@ let%expect_test "x+!(ab)+yz" =
 let%expect_test "x+!!(10)" = 
   test "x+!!(10)";
   [%expect {| (Sum ((Prim x) (Test (V false)))) |}]
+
+let%expect_test "yz*+yz!(ab)+!(ab)zb*" = 
+  test "yz*+yz!(ab)+!(ab)zb*";
+  [%expect {|
+    (Sum
+     ((Sum
+       ((Prod ((Prim y) (Star (Prim z))))
+        (Prod
+         ((Prim y)
+          (Prod ((Prim z) (Test (N a (V true) (N b (V true) (V false))))))))))
+      (Prod
+       ((Test (N a (V true) (N b (V true) (V false))))
+        (Prod ((Prim z) (Star (Test (N b (V false) (V true)))))))))) |}]
