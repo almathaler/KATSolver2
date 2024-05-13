@@ -42,3 +42,38 @@ let%expect_test "!!(d+c+!!(b+a))" =
 let%expect_test "!!(ab)" = 
   test "!!(ab)"; 
   [%expect {| (N a (V false) (N b (V false) (V true))) |}]
+
+
+let%expect_test "!!(fedcba)" = 
+  test "!!(fedcba)";
+  [%expect {|
+    (N a (V false)
+     (N b (V false)
+      (N c (V false) (N d (V false) (N e (V false) (N f (V false) (V true))))))) |}]
+
+let%expect_test "!!(f+e+d+!!(da+c+ba))" = 
+  test "!!(f+e+d+!!(da+c+ba))";
+  [%expect {|
+    (N a (N c (N d (N e (N f (V false) (V true)) (V true)) (V true)) (V true))
+     (N b (N c (N d (N e (N f (V false) (V true)) (V true)) (V true)) (V true))
+      (V true))) |}]
+
+let%expect_test "!!(1a)" = 
+  test "!!(1 + a)"; 
+  [%expect {| (V true) |}]
+
+let%expect_test "!!(a+0)" = 
+  test "!!(a+0)"; 
+  [%expect {| (N a (V false) (V true)) |}]
+
+let%expect_test "!!(1a)" = 
+  test "!!(1a)"; 
+  [%expect {| (N a (V false) (V true)) |}]
+
+let%expect_test "!!(a0)" = 
+  test "!!(a0)"; 
+  [%expect {| (V false) |}]
+
+let%expect_test "!!(aaa)" = 
+  test "!!(aaa)"; 
+  [%expect {| (N a (V false) (V true)) |}]
