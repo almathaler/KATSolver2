@@ -13,7 +13,10 @@ let sexp_of_t = sexp_of_t
 
 let t_of_sexp = t_of_sexp
 
-let to_bdd t = 
+let prim_to_bdd c = 
+  Bdd.node c (Bdd.constant false) (Bdd.constant true)
+let rec to_bdd t = 
   match t with 
-  | Prim c -> Bdd.node c (Bdd.constant false) (Bdd.constant true)
+  | Prim c -> prim_to_bdd c
+  | Not t -> Bdd.negate (to_bdd t)
   | _ -> failwith "todo"

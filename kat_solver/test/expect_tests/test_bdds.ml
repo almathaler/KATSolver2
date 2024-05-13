@@ -13,6 +13,6 @@ let%expect_test "a" =
   test "a";
   [%expect {| (N a (V false) (V true)) |}]
 
-let%expect_test "!(a+b)" = 
-  test "!(a+b)";
-  [%expect {||}]
+let%expect_test "!a" = 
+  test "!a";
+  [%expect {| (N a (V true) (V false)) |}]

@@ -23,5 +23,12 @@ let rec apply (f: 'b -> 'b -> 'b) (left: ('a, 'b) t) (right : ('a, 'b) t) =
         | -1 -> (node a (apply f l right) (apply f r right))
         | _ -> (node a' (apply f left l') (apply f left r'))
 
+let rec apply_single (f: 'b -> 'b) (bdd : ('a, 'b) t) : ('a, 'b) t = 
+    match bdd with 
+    | V v -> constant (f v) 
+    | N(a, l, r) -> node a (apply_single f l) (apply_single f r)
         
-        
+let rec negate bdd = 
+    match bdd with 
+    | V v -> constant (not v)
+    | N(a, l, r) -> node a (negate l) (negate r)

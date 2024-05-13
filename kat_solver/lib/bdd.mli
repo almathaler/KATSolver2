@@ -20,3 +20,8 @@ val node : 'a -> ('a, 'b) t -> ('a, 'b) t -> ('a, 'b) t
 
 (** From Pous Fig. 2, but less polymorphic *)
 val apply : ('b -> 'b -> 'b) -> ('a, 'b) t -> ('a, 'b) t -> ('a, 'b) t 
+
+val apply_single : ('b -> 'b) -> ('a, 'b) t -> ('a, 'b) t
+
+(** Negates the a boolean tree. Just negates all the leaves *)
+val negate : ('a, bool) t -> ('a, bool) t
