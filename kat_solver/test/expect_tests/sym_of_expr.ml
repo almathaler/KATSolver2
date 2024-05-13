@@ -36,3 +36,10 @@ let%expect_test "yz*+yz!(ab)+!(ab)zb*" =
       (Prod
        ((Test (N a (V true) (N b (V true) (V false))))
         (Prod ((Prim z) (Star (Test (N b (V false) (V true)))))))))) |}]
+
+let%expect_test "x+y+!!((a+b+c)+(c+b+a)+abc+cba)" = 
+  test "x+y+!!((a+b+c)+(c+b+a)+abc+cba)";
+  [%expect {|
+    (Sum
+     ((Sum ((Prim x) (Prim y)))
+      (Test (N a (N b (N c (V false) (V true)) (V true)) (V true))))) |}]
