@@ -14,6 +14,9 @@ let rec to_string a_ts b_ts t =
 
 let constant v = V (v) 
 
+let zero = V (false)
+let one = V (true)
+
 let node a l r = 
     if (Stdlib.(=) l r) then l else N (a, l, r)
 

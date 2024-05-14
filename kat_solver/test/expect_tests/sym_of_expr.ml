@@ -24,7 +24,7 @@ let%expect_test "x+!(ab)+yz" =
 
 let%expect_test "x+!!(10)" = 
   test "x+!!(10)";
-  [%expect {| (Sum ((Test (V false)) (Prim x))) |}]
+  [%expect {| (Prim x) |}]
 
 let%expect_test "yz*+yz!(ab)+!(ab)zb*" = 
   test "yz*+yz!(ab)+!(ab)zb*";
@@ -85,3 +85,19 @@ let%expect_test "to_str 1+a" =
 let%expect_test "to_str 0+x" = 
   test_to_string "0+x";
   [%expect {| x |}]
+
+let%expect_test "to_str 0+0+x" = 
+  test_to_string "0+0+x";
+  [%expect {| x |}]
+
+let%expect_test "to_str 0+0+0+x" = 
+  test_to_string "0+0+0+x";
+  [%expect {| x |}]
+
+let%expect_test "to_str x+0+x+0+x" = 
+  test_to_string "x+0+x+0+x";
+  [%expect {| x |}]
+
+let%expect_test "to_str 0+0+1+0+x" = 
+  test_to_string "0+0+1+0+x";
+  [%expect {| [true]+x |}]

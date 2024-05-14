@@ -14,6 +14,8 @@ val sexp_of_t : ('a -> Sexp.t) -> ('b -> Sexp.t) -> ('a, 'b) t -> Sexp.t
 (** Creates a leaf node *)
 val constant : 'b -> (_, 'b) t 
 
+val zero : (_, bool) t 
+val one : (_, bool) t 
 (** Creates a decision node. If the right and left children are equal, 
     just gives the right node *)
 val node : 'a -> ('a, 'b) t -> ('a, 'b) t -> ('a, 'b) t
