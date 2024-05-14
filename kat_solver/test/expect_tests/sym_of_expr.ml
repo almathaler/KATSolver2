@@ -66,3 +66,22 @@ let%expect_test "to_str x+x+!(ab)+!(ab)+yz" =
   test_to_string "x+x+!(ab)+!(ab)+yz"; 
   [%expect {| (a[true](b[true][false]))+(y)(z)+x |}]
 
+let%expect_test "to_str !(a+b)+z+z+x+x+y+y+!(a+b)" = 
+  test_to_string "!(a+b)+z+z+x+x+y+y+!(a+b)";
+  [%expect {| (a(b[true][false])[false])+x+y+z |}]
+
+let%expect_test "to_str 0+1" = 
+  test_to_string "0+1";
+  [%expect {| [true] |}]
+
+let%expect_test "to_str 0+a" = 
+  test_to_string "0+a";
+  [%expect {| (a[false][true]) |}]
+
+let%expect_test "to_str 1+a" = 
+  test_to_string "1+a";
+  [%expect {| [true] |}]
+
+let%expect_test "to_str 0+x" = 
+  test_to_string "0+x";
+  [%expect {| x |}]

@@ -52,7 +52,8 @@ let sum_builder (acc:(t option * t)) (to_add : t) =
           | Test _ -> failwith "precondition violated, to_add is test while buffer is not"
           | _ -> (Some (Sum (acc, buffer)), to_add))
 
-(** ACI Normalizing sum constructor. 
+(** ACI Normalizing sum constructor. Sorst and associates to the left, 
+    consecutive tests merged, duplicate tests and zeroes removed
     Precondition: [se1] and [se2] are already ACI normalized *)
 let sum se1 se2 = 
   match (se1, se2) with 
