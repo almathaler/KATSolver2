@@ -32,11 +32,11 @@ let%expect_test "yz*+yz!(ab)+!(ab)zb*" =
     (Sum
      ((Sum
        ((Prod
-         ((Test (N a (V true) (N b (V true) (V false))))
-          (Prod ((Prim z) (Star (Test (N b (V false) (V true))))))))
+         ((Prod ((Test (N a (V true) (N b (V true) (V false)))) (Prim z)))
+          (Star (Test (N b (V false) (V true))))))
         (Prod
-         ((Prim y)
-          (Prod ((Prim z) (Test (N a (V true) (N b (V true) (V false))))))))))
+         ((Prod ((Prim y) (Prim z)))
+          (Test (N a (V true) (N b (V true) (V false))))))))
       (Prod ((Prim y) (Star (Prim z)))))) |}]
 
 let%expect_test "x+y+!!((a+b+c)+(c+b+a)+abc+cba)" = 
@@ -101,3 +101,12 @@ let%expect_test "to_str x+0+x+0+x" =
 let%expect_test "to_str 0+0+1+0+x" = 
   test_to_string "0+0+1+0+x";
   [%expect {| [true]+x |}]
+
+let%expect_test "to_str 1a" = 
+  test_to_string "1a"; 
+  [%expect {| (a[false][true]) |}]
+
+
+let%expect_test "to_str 1x" = 
+  test_to_string "1x"; 
+  [%expect {| x |}]

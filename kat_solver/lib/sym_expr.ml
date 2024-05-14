@@ -121,7 +121,7 @@ let prod se1 se2 =
   let with_tests_merged_and_zeroed = 
     if (List.find with_tests_merged ~f:(fun term -> Stdlib.(=) term (Test(Bdd.zero))) |> Option.is_some) then [Test (Bdd.zero)] else with_tests_merged 
   in
-  let no_ones = List.filter with_tests_merged_and_zeroed ~f:(fun term -> Stdlib.(=) term (Test(Bdd.one))) in 
+  let no_ones = List.filter with_tests_merged_and_zeroed ~f:(fun term -> not (Stdlib.(=) term (Test(Bdd.one)))) in 
   match no_ones with 
   | hd::[] -> hd 
   | hd::snd::tl -> 
