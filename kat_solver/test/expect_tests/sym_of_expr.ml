@@ -54,3 +54,15 @@ let%expect_test "z+y+x+w+v+u" =
      ((Sum
        ((Sum ((Sum ((Sum ((Prim u) (Prim v))) (Prim w))) (Prim x))) (Prim y)))
       (Prim z))) |}]
+
+let test_to_string str = 
+  str |> parse |> Sym_expr.of_expr |> Sym_expr.to_string |> print_endline
+
+let%expect_test "to_str x+!(ab)+yz" = 
+  test_to_string "x+!(ab)+yz"; 
+  [%expect {| (a[true](b[true][false]))+(y)(z)+x |}]
+
+let%expect_test "to_str x+x+!(ab)+!(ab)+yz" = 
+  test_to_string "x+x+!(ab)+!(ab)+yz"; 
+  [%expect {| (a[true](b[true][false]))+(y)(z)+x |}]
+
