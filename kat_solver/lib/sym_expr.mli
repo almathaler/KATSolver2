@@ -15,3 +15,5 @@ val of_expr : Expr.t -> t
 (** ACI Normalizing sum constructor. 
     Precondition: [se1] and [se2] are already ACI normalized *)
 val sum : t -> t -> t
+
+val to_string : t -> string 

@@ -18,4 +18,4 @@ let%expect_test "a and b" =
 
 let%expect_test "x and a" = 
   test_once "x" "a"; 
-  [%expect {| (Sum ((Test (N a (V false) (V true))) (Prim x) )) |}]
+  [%expect {| (Sum ((Test (N a (V false) (V true))) (Prim x))) |}]

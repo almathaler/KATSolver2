@@ -77,3 +77,10 @@ let%expect_test "!!(a0)" =
 let%expect_test "!!(aaa)" = 
   test "!!(aaa)"; 
   [%expect {| (N a (V false) (V true)) |}]
+
+let test_to_string str = 
+  str |> parse |> Expr.to_bdd |> Bdd.to_string Char.to_string Bool.to_string |> print_endline
+
+let%expect_test "!!(abc)" = 
+  test_to_string "!!(abd)"; 
+  [%expect {| (a[false](b[false](d[false][true]))) |}]

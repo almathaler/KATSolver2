@@ -9,13 +9,13 @@ type t =
 [@@deriving sexp]
 
 let sexp_of_t = sexp_of_t
-let rec of_expr expr = 
-  match expr with 
-  | Expr.Prim c -> Prim c 
-  | Expr.Sum (e1, e2) -> Sum (of_expr e1, of_expr e2)
-  | Expr.Prod (e1, e2) -> Prod (of_expr e1, of_expr e2)
-  | Expr.Star e -> Star (of_expr e)
-  | Expr.Test t -> Test (Test.to_bdd t)
+
+let rec to_string = function 
+| Prim c -> Char.to_string c 
+| Star e -> (to_string e) ^ "*"
+| Sum (e1, e2) -> (to_string e1) ^ "+" ^ (to_string e2) 
+| Prod (e1, e2) -> "(" ^ (to_string e1) ^ ")(" ^ (to_string e2) ^ ")"
+| Test t -> Bdd.to_string Char.to_string Bool.to_string t 
 
 (* Because the symbolic Bzd_d constructs new sym_exprs from old sym_exprs, it's 
    better to have Sum and Prod constructors that do the normalization 
@@ -45,11 +45,11 @@ let sum_builder (acc:(t option * t)) (to_add : t) =
       | _ -> if (Stdlib.(=) buffer to_add) then (Some acc, buffer) else (Some (Sum (acc, buffer)), to_add))
     | _ -> 
       match buffer with 
-      | Test _ -> failwith "precondition violated"
+      | Test _ -> failwith "precondition violated, buffer is test while acc is not"
       | _ -> 
         if (Stdlib.(=) buffer to_add) then (Some acc, buffer) else  
           match to_add with 
-          | Test _ -> failwith "precondition violated"
+          | Test _ -> failwith "precondition violated, to_add is test while buffer is not"
           | _ -> (Some (Sum (acc, buffer)), to_add))
 
 (** ACI Normalizing sum constructor. 
@@ -66,7 +66,7 @@ let sum se1 se2 =
     let se1_subterms = get_plus_subterms se1 in 
     let se2_subterms = get_plus_subterms se2 in 
     let subterms = 
-      (List.append se1_subterms se2_subterms) |> List.sort ~compare:(fun se1 se2 -> Sexp.compare (sexp_of_t se1) (sexp_of_t se2)) in 
+      (List.append se1_subterms se2_subterms) |> List.sort ~compare:(fun se1 se2 -> Stdlib.compare (to_string se1) (to_string se2)) in 
     assert (List.length subterms > 1); 
     let almost_sum = List.fold_left (Stdlib.List.tl subterms) ~f:sum_builder ~init:(None, Stdlib.List.hd subterms) in 
     match almost_sum with 
@@ -80,3 +80,12 @@ let sum se1 se2 =
       | _ -> Sum (se1, se2)
     )
     | _ -> failwith "Couldn't build symbolic sum"
+
+let rec of_expr expr = 
+  match expr with 
+  | Expr.Prim c -> Prim c 
+  | Expr.Sum (e1, e2) -> sum (of_expr e1) (of_expr e2)
+  | Expr.Prod (e1, e2) -> Prod (of_expr e1, of_expr e2)
+  | Expr.Star e -> Star (of_expr e)
+  | Expr.Test t -> Test (Test.to_bdd t)
+    

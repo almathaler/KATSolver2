@@ -32,3 +32,4 @@ val logical_or : ('a, bool) t -> ('a, bool) t -> ('a, bool) t
 (** LANDs two boolean trees *)
 val logical_and : ('a, bool) t -> ('a, bool) t -> ('a, bool) t
 
+val to_string : ('a -> string) -> ('b -> string) -> ('a, 'b) t -> string 

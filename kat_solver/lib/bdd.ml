@@ -7,6 +7,11 @@ type ('a, 'b) t = ('a, 'b) node
 
 let sexp_of_t = sexp_of_t
 
+let rec to_string a_ts b_ts t = 
+    match t with 
+    | V b ->  "["^ (b_ts b) ^ "]" 
+    | N (a, n1, n2) -> "(" ^ (a_ts a) ^(to_string a_ts b_ts n1)^ (to_string a_ts b_ts n2)^")"
+
 let constant v = V (v) 
 
 let node a l r = 
