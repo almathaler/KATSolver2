@@ -43,3 +43,11 @@ let%expect_test "x+y+!!((a+b+c)+(c+b+a)+abc+cba)" =
     (Sum
      ((Sum ((Prim x) (Prim y)))
       (Test (N a (N b (N c (V false) (V true)) (V true)) (V true))))) |}]
+
+let%expect_test "z+y+x+w+v+u" = 
+  test "z+y+x+w+u+v"; 
+  [%expect {|
+    (Sum
+     ((Sum
+       ((Sum ((Sum ((Sum ((Prim z) (Prim y))) (Prim x))) (Prim w))) (Prim u)))
+      (Prim v))) |}]

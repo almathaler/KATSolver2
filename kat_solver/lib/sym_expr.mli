@@ -11,3 +11,7 @@ type t =
 val sexp_of_t : t -> Sexp.t
 (** Translates an expr to a sym_expr, and also normalizes while doing this. *)
 val of_expr : Expr.t -> t 
+
+(** ACI Normalizing sum constructor. 
+    Precondition: [se1] and [se2] are already ACI normalized *)
+val sum : t -> t -> t
