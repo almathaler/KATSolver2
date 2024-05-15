@@ -15,4 +15,4 @@ module Brz_d : sig
         (char, Sym_expr.t) Bdd.node Explicit_deriv.t 
 end
 
-val are_equivalent : Expr.t -> Expr.t -> (bool * Expr.t option * Expr.t option)
+val are_equivalent : Sym_expr.t -> Sym_expr.t -> (bool * Sym_expr.t option * Sym_expr.t option)

@@ -27,7 +27,7 @@ val apply_single : ('b -> 'b) -> ('a, 'b) t -> ('a, 'b) t
 
 val map : f:('b -> 'c) -> ('a, 'b) t -> ('a, 'c) t
 
-val iter2 : f:('a * 'b -> unit) -> ('c, 'a) t -> ('c, 'b) t -> unit
+val iter2 : f:('a -> 'b -> unit) -> ('c, 'a) t -> ('c, 'b) t -> unit
 
 (** Negates a boolean tree. Just negates all the leaves *)
 val negate : ('a, bool) t -> ('a, bool) t
