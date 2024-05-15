@@ -17,3 +17,5 @@ val of_expr : Expr.t -> t
 val sum : t -> t -> t
 
 val to_string : t -> string 
+
+val sym_epsilon : t -> (char, bool) Bdd.t

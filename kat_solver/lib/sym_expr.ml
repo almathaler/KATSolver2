@@ -134,4 +134,12 @@ let rec of_expr expr =
   | Expr.Prod (e1, e2) -> prod (of_expr e1) (of_expr e2)
   | Expr.Star e -> Star (of_expr e)
   | Expr.Test t -> Test (Test.to_bdd t)
+
+let rec sym_epsilon se : (char, bool) Bdd.t = 
+  match se with 
+  | Test t -> t 
+  | Prim _ -> Bdd.zero
+  | Star _ -> Bdd.one 
+  | Prod (se1, se2) -> Bdd.logical_and (sym_epsilon se1) (sym_epsilon se2)
+  | Sum (se1, se2) -> Bdd.logical_or (sym_epsilon se1) (sym_epsilon se2)
     
