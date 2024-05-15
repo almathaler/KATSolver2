@@ -19,3 +19,7 @@ let%expect_test "a, a" =
 let%expect_test "a, b" = 
   test "a" "b"; 
   [%expect {| false |}]
+
+let%expect_test "1a, a" = 
+  test "1a" "a"; 
+  [%expect {| true |}]
