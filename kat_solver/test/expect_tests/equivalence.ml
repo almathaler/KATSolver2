@@ -43,3 +43,8 @@ let%expect_test "1, x*" =
 let%expect_test "1+x*, x*" = 
   test "1+x*" "x*"; 
   [%expect {| true |}]
+
+(* Ex from https://perso.ens-lyon.fr/damien.pous/symbolickat/ *)
+let%expect_test "(ar!a)*, 1+ar!a" = 
+  test "(ar!a)*" "1+ar!a"; 
+  [%expect {| true |}]
