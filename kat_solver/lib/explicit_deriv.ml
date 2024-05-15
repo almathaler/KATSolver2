@@ -13,3 +13,6 @@ let map t ~f =
 
 let map2 t1 t2 ~f = 
   List.map2 (fun (c1, v1) (c2, v2) -> assert (c1 = c2); (c1, f v1 v2)) t1 t2 
+
+let iter2 ~f t1 t2 = 
+  List.iter2 (fun (c1, v1) (c2, v2) -> assert (c1 = c2); f v1 v2) t1 t2

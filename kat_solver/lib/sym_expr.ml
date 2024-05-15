@@ -17,6 +17,9 @@ let rec to_string = function
 | Prod (e1, e2) -> "(" ^ (to_string e1) ^ ")(" ^ (to_string e2) ^ ")"
 | Test t -> Bdd.to_string Char.to_string Bool.to_string t 
 
+let compare e1 e2 = 
+  String.compare (to_string e1) (to_string e2)
+
 (* Because the symbolic Bzd_d constructs new sym_exprs from old sym_exprs, it's 
    better to have Sum and Prod constructors that do the normalization 
    (ACI + merging consecutive tests) for us, expecting the old sym_exprs to be 

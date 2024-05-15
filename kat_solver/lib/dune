@@ -13,6 +13,7 @@
   lexer
   parser
   sym_expr
+  sym_expr_pair_set
   test))
 
 (menhir

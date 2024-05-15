@@ -40,6 +40,20 @@ let rec map ~f (bdd : ('a, 'b) t) : ('a, 'c) t =
     match bdd with 
     | V v -> constant (f v) 
     | N(a, l, r) -> node a (map ~f l) (map ~f r)
+
+(* From Pous fig 5 *)
+let rec iter2 ~f bdd1 bdd2 : unit = 
+    match (bdd1, bdd2) with 
+    | V v, V w -> f (v, w)
+    | V _, N(_, l, r) -> iter2 ~f bdd1 l; iter2 ~f bdd1 r
+    | N(_, l, r), V _ -> iter2 ~f l bdd2; iter2 ~f r bdd2 
+    | N(a, l, r), N(a', l', r') -> (
+        match Stdlib.compare a a' with 
+        | 0 -> iter2 ~f l l'; iter2 ~f r r' 
+        | -1 -> iter2 ~f l bdd2; iter2 ~f r bdd2 
+        | _ -> iter2 ~f bdd1 l'; iter2 ~f bdd1 r'
+    )
+
 let negate bdd = apply_single (not) bdd
 
 let logical_or l r = apply (||) l r

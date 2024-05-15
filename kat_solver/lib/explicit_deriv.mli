@@ -10,3 +10,5 @@ val all_but_one : default:('a) -> exception_key:(char) -> exception_val:('a) -> 
 val map : 'a t -> f:('a -> 'b) -> 'b t 
 
 val map2 : 'a t -> 'a t -> f:('a -> 'a -> 'b) -> 'b t 
+
+val iter2 : f:('a -> 'a -> unit) -> 'a t -> 'a t -> unit 

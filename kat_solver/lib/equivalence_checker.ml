@@ -55,9 +55,13 @@ module Brz_d = struct
             Explicit_deriv.map2 ~f:(fun s1 s2 -> Bdd.apply (Sym_expr.sum) s1 s2) left right 
         )
       in 
-      derivative
-
-  
+      derivative 
 end
 
-let are_equivalent _ _ = failwith "todo"
+let are_equivalent se1 se2 = 
+  let _brz_e = Brz_e.create () in 
+  let _brz_d = Brz_d.create () in 
+  let _r = Sym_expr_pair_set.empty in 
+  let todo = Queue.create () in 
+  Queue.push (se1, se2) todo;
+  failwith "todo"
