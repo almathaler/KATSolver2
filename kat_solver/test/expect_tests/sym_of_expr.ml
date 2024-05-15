@@ -149,3 +149,7 @@ let%expect_test "to_str x0" =
 let%expect_test "to_str x1" = 
   test_to_string "x1"; 
   [%expect {| x |}]
+
+let%expect_test "to_str ax0" = 
+  test_to_string "ax0"; 
+  [%expect {| [false] |}]
