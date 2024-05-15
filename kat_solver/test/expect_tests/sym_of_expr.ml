@@ -106,7 +106,46 @@ let%expect_test "to_str 1a" =
   test_to_string "1a"; 
   [%expect {| (a[false][true]) |}]
 
-
 let%expect_test "to_str 1x" = 
   test_to_string "1x"; 
+  [%expect {| x |}]
+
+let%expect_test "to_str x+y+1x+x1+0yx" = 
+  test_to_string "x+y+1x+x1+0yx";
+  [%expect {| x+y |}]
+
+let%expect_test "to_str x+y+z+a+b+c" = 
+  test_to_string "x+y+z+a+b+c";
+  [%expect {| (a(b(c[false][true])[true])[true])+x+y+z |}]
+
+(* sums should be ACI norm, with tests at the start, duplicates and zeroes 
+   removed, tests merged *)
+let%expect_test "to_str x+y+0+z+a+0+b+c+a" = 
+  test_to_string "x+y+0+z+a+0+b+c+a";
+  [%expect {| (a(b(c[false][true])[true])[true])+x+y+z |}]
+
+(* products should be associated to the left, consecutive tests merged and also 
+   idempotency for tests, ones removed, zeroes zeroeing out the product *)
+let%expect_test "to_str xy10+x0+y0" = 
+  test_to_string "xy10+x0+y0"; 
+  [%expect {| [false] |}]
+
+let%expect_test "to_str abc10+a0+b0" = 
+  test_to_string "abc10+a0+b0"; 
+  [%expect {| [false] |}]
+
+let%expect_test "to_str x+a1+0a+ab0c+1" = 
+  test_to_string "x+a1+0a+ab0c+1"; 
+  [%expect {| [true]+x |}]
+
+let%expect_test "to_str x+y+1" = 
+  test_to_string "x+y+1";
+  [%expect {| [true]+x+y |}]
+
+let%expect_test "to_str x0" = 
+  test_to_string "x0"; 
+  [%expect {| [false] |}]
+
+let%expect_test "to_str x1" = 
+  test_to_string "x1"; 
   [%expect {| x |}]
