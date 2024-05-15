@@ -32,6 +32,6 @@ let%expect_test "ab+!b, ab" =
   test "ab+!b" "ab"; 
   [%expect {| false |}]
 
-(* let%expect_test "ax0, ax" = 
+let%expect_test "ax0, ax" = 
   test "ax0" "ax"; 
-  [%expect {| false |}] *)
+  [%expect {| false |}]

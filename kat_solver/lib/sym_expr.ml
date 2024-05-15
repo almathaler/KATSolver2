@@ -106,6 +106,7 @@ let prod se1 se2 =
   let se1_subterms = get_prod_subterms se1 in 
   let se2_subterms = get_prod_subterms se2 in 
   let subterms = se1_subterms @ se2_subterms in 
+  assert (List.length subterms >= 2); 
   let rev_sts = List.rev subterms in 
   let with_tests_merged = 
     List.fold_left 
@@ -124,12 +125,14 @@ let prod se1 se2 =
   let with_tests_merged_and_zeroed = 
     if (List.find with_tests_merged ~f:(fun term -> Stdlib.(=) term (Test(Bdd.zero))) |> Option.is_some) then [Test (Bdd.zero)] else with_tests_merged 
   in
+  assert (List.length with_tests_merged_and_zeroed > 0);
   let no_ones = List.filter with_tests_merged_and_zeroed ~f:(fun term -> not (Stdlib.(=) term (Test(Bdd.one)))) in 
+  let no_ones = if (List.is_empty no_ones) then [Test (Bdd.one)] else no_ones in 
   match no_ones with 
   | hd::[] -> hd 
   | hd::snd::tl -> 
     List.fold_left ~init:(Prod(hd, snd)) ~f:(fun acc x -> Prod(acc, x)) tl 
-  | _ -> failwith "empty product"
+  | _ -> failwith (Printf.sprintf "empty product. se1: %s se2: %s" (to_string se1) (to_string se2))
 let rec of_expr expr = 
   match expr with 
   | Expr.Prim c -> Prim c 
