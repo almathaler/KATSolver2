@@ -16,6 +16,6 @@ val of_expr : Expr.t -> t
     Precondition: [se1] and [se2] are already ACI normalized *)
 val sum : t -> t -> t
 
-val to_string : t -> string 
+val prod : t -> t -> t 
 
-val sym_epsilon : t -> (char, bool) Bdd.t
+val to_string : t -> string 

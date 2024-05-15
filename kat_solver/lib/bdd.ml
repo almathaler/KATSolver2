@@ -36,6 +36,10 @@ let rec apply_single (f: 'b -> 'b) (bdd : ('a, 'b) t) : ('a, 'b) t =
     | V v -> constant (f v) 
     | N(a, l, r) -> node a (apply_single f l) (apply_single f r)
         
+let rec map ~f (bdd : ('a, 'b) t) : ('a, 'c) t = 
+    match bdd with 
+    | V v -> constant (f v) 
+    | N(a, l, r) -> node a (map ~f l) (map ~f r)
 let negate bdd = apply_single (not) bdd
 
 let logical_or l r = apply (||) l r

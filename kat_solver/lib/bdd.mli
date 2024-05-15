@@ -25,6 +25,8 @@ val apply : ('b -> 'b -> 'b) -> ('a, 'b) t -> ('a, 'b) t -> ('a, 'b) t
 
 val apply_single : ('b -> 'b) -> ('a, 'b) t -> ('a, 'b) t
 
+val map : f:('b -> 'c) -> ('a, 'b) t -> ('a, 'c) t
+
 (** Negates a boolean tree. Just negates all the leaves *)
 val negate : ('a, bool) t -> ('a, bool) t
 
