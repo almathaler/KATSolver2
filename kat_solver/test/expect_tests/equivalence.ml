@@ -15,3 +15,7 @@ let test str1 str2 =
 let%expect_test "a, a" = 
   test "a" "a"; 
   [%expect {| true |}]
+
+let%expect_test "a, b" = 
+  test "a" "b"; 
+  [%expect {| false |}]
