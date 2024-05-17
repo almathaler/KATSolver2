@@ -12,3 +12,5 @@ val map : 'a t -> f:('a -> 'b) -> 'b t
 val map2 : 'a t -> 'a t -> f:('a -> 'a -> 'b) -> 'b t 
 
 val iter2 : f:('a -> 'a -> unit) -> 'a t -> 'a t -> unit 
+
+val to_string : (char, Sym_expr.t) Bdd.node t -> string

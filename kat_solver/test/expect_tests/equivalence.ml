@@ -22,7 +22,8 @@ let%expect_test "a, a" =
 
 let%expect_test "a, b" = 
   test "a" "b"; 
-  [%expect {| ans: false, w1: (a[false][true]), w2: (b[false][true]) |}]
+  [%expect {|
+    ans: false, w1: (a[false][true]), w2: (b[false][true]) |}]
 
 let%expect_test "1a, a" = 
   test "1a" "a"; 
@@ -30,19 +31,23 @@ let%expect_test "1a, a" =
 
 let%expect_test "!a, a" = 
   test "!a" "a"; 
-  [%expect {| ans: false, w1: (a[true][false]), w2: (a[false][true]) |}]
+  [%expect {|
+    ans: false, w1: (a[true][false]), w2: (a[false][true]) |}]
 
 let%expect_test "ab+!b, ab" = 
   test "ab+!b" "ab"; 
-  [%expect {| ans: false, w1: (a(b[true][false])[true]), w2: (a[false](b[false][true])) |}]
+  [%expect {|
+    ans: false, w1: (a(b[true][false])[true]), w2: (a[false](b[false][true])) |}]
 
 let%expect_test "ax0, ax" = 
   test "ax0" "ax"; 
-  [%expect {| ans: false, w1: [false], w2: [true] |}]
+  [%expect {|
+    ans: false, w1: [false], w2: [true] |}]
 
 let%expect_test "1, x*" = 
   test "1" "x*"; 
-  [%expect {| ans: false, w1: [false], w2: x* |}]
+  [%expect {|
+    ans: false, w1: [false], w2: x* |}]
 
 let%expect_test "1+x*, x*" = 
   test "1+x*" "x*"; 
@@ -104,8 +109,9 @@ let%expect_test "(bc+!b!c)(brs+!brt) = bcrs+!b!crt" =
 
 (* WRONG *)
 let%expect_test "arp*+!arp** = brp*+!brp**" = 
-  test "arp*+!arp**" "brp*+!brp"; 
-  [%expect {| ans: false, w1: p**, w2: p |}]
+  test "arp*+!arp**" "brp*+!brp**"; 
+  [%expect {|
+    ans: true, w1: None, w2: None |}]
 
 let%expect_test "arp**+brq** = arp*+brq*" = 
   test "arp**+brq**" "arp*+brq*"; 

@@ -16,3 +16,10 @@ let map2 t1 t2 ~f =
 
 let iter2 ~f t1 t2 = 
   List.iter2 (fun (c1, v1) (c2, v2) -> assert (c1 = c2); f v1 v2) t1 t2
+
+let to_string t = 
+  let af = Core.Char.to_string in 
+  let bf = Sym_expr.to_string in 
+  List.fold_left (fun acc (c, v) -> acc ^ (
+    Printf.sprintf "(%c, %s)\n" c (Bdd.to_string af bf v) 
+  )) "" t
