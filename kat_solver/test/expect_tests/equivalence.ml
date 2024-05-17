@@ -77,8 +77,56 @@ let%expect_test "a(!ax)* = a" =
   test "a(!ax)*" "a"; 
   [%expect {| ans: true, w1: None, w2: None |}]
 
-(* Ex from https://perso.ens-lyon.fr/damien.pous/symbolickat/ *)
+(* Examples from https://perso.ens-lyon.fr/damien.pous/symbolickat/ *)
+let%expect_test "(p+q)* = p*(qp*)*" = 
+  test "(p+q)*" "p*(qp*)*";
+  [%expect {| ans: true, w1: None, w2: None |}]
+
+let%expect_test "(p+q)* = ((1+p)(1+q))*" = 
+  test "(p+q)*" "((1+p)(1+q))*"; 
+  [%expect {| ans: true, w1: None, w2: None |}]
+
+let%expect_test "(pp)*(ppp)* = (ppp)*(pp)*" = 
+  test "(pp)*(ppp)*" "(ppp)*(pp)*"; 
+  [%expect {| ans: true, w1: None, w2: None |}]
+
+let%expect_test "(pp)*+p* = (ppp)*+p*" =
+  test "(pp)*+p*" "(ppppp)*+p*"; 
+  [%expect {| ans: true, w1: None, w2: None |}]
+
 let%expect_test "(ar!a)*, 1+ar!a" = 
   test "(ar!a)*" "1+ar!a"; 
   [%expect {| ans: true, w1: None, w2: None |}]
+
+let%expect_test "(bc+!b!c)(brs+!brt) = bcrs+!b!crt" = 
+  test "(bc+!b!c)(brs+!brt)" "bcrs+!b!crt"; 
+  [%expect {| ans: true, w1: None, w2: None |}]
+
+(* WRONG *)
+let%expect_test "arp*+!arp** = brp*+!brp**" = 
+  test "arp*+!arp**" "brp*+!brp"; 
+  [%expect {| ans: false, w1: p**, w2: p |}]
+
+let%expect_test "arp**+brq** = arp*+brq*" = 
+  test "arp**+brq**" "arp*+brq*"; 
+  [%expect {| ans: true, w1: None, w2: None |}]
+
+let%expect_test "(ap)*!a(ap)*!a = (ap)*!a" = 
+  test "(ap)*!a(ap)*!a" "(ap)*!a"; 
+  [%expect {| ans: true, w1: None, w2: None |}]
+
+let%expect_test "a(ap!a+!aqa)*a = a(p!aqa)*" = 
+  test "a(ap!a+!aqa)*a" "a(p!aqa)*"; 
+  [%expect {| ans: true, w1: None, w2: None |}]
+
+let%expect_test "a(cpq+!cp)+!a(cpq+!cp) = c(bpq+!bpq)+!cp" = 
+  test "a(cpq+!cp)+!a(cpq+!cp)" "c(bpq+!bpq)+!cp";
+  [%expect {| ans: true, w1: None, w2: None |}]
+
+
+
+
+
+
+
 
