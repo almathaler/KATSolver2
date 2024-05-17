@@ -43,8 +43,8 @@ module Brz_d = struct
           | Prim p -> Explicit_deriv.all_but_one ~default:(Bdd.constant test_zero) ~exception_key:p ~exception_val:(Bdd.constant test_one)
           | Sum (se1, se2) -> 
             Explicit_deriv.map2 ~f:(fun s1 s2 -> Bdd.apply (Sym_expr.sum) s1 s2) (brz_d t se1) (brz_d t se2)
-          | Star se -> 
-            Explicit_deriv.map ~f:(Bdd.apply_single (fun x -> Sym_expr.prod x se)) (brz_d t se)
+          | Star x -> 
+            Explicit_deriv.map ~f:(Bdd.apply_single (fun y -> Sym_expr.prod y se)) (brz_d t x)
           | Prod (se1, se2) -> 
             let eps_se1 = brz_e se1 in 
             let sym_eps_se1 = Bdd.map ~f:(fun b -> if b then test_one else test_zero) eps_se1 in 

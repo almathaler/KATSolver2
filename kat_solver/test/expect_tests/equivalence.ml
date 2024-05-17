@@ -42,14 +42,43 @@ let%expect_test "ax0, ax" =
 
 let%expect_test "1, x*" = 
   test "1" "x*"; 
-  [%expect {| ans: false, w1: [false], w2: [true] |}]
+  [%expect {| ans: false, w1: [false], w2: x* |}]
 
 let%expect_test "1+x*, x*" = 
   test "1+x*" "x*"; 
+  [%expect {| ans: true, w1: None, w2: None |}]
+
+(* From Sec. 4 of Pous, some simple laws from KAT *)
+let%expect_test "a + !a = 1" = 
+  test "a+!a" "1"; 
+  [%expect {| ans: true, w1: None, w2: None |}]
+
+let%expect_test "a(!a+b) = ab" = 
+  test "a(!a+b)" "ab";
+  [%expect {| ans: true, w1: None, w2: None |}]
+
+let%expect_test "ab = !(!a+!b)" = 
+  test "!(!a+!b)" "ab"; 
+  [%expect {| ans: true, w1: None, w2: None |}]
+
+let%expect_test "a(!a+b) = !(!a+!b)" = 
+  test "a(!a+b)" "!(!a+!b)"; 
+  [%expect {| ans: true, w1: None, w2: None |}]
+
+let%expect_test "x*x* = x*" = 
+  test "x*x*" "x*"; 
+  [%expect {| ans: true, w1: None, w2: None |}]
+
+let%expect_test "(x+y)* = x*(yx*)*" = 
+  test "(x+y)*" "x*(yx*)*"; 
+  [%expect {| ans: true, w1: None, w2: None |}]
+
+let%expect_test "a(!ax)* = a" = 
+  test "a(!ax)*" "a"; 
   [%expect {| ans: true, w1: None, w2: None |}]
 
 (* Ex from https://perso.ens-lyon.fr/damien.pous/symbolickat/ *)
 let%expect_test "(ar!a)*, 1+ar!a" = 
   test "(ar!a)*" "1+ar!a"; 
   [%expect {| ans: true, w1: None, w2: None |}]
-  (* [%expect {| ans: false, w1: [false], w2: (a[true][false]) |}] *)
+
