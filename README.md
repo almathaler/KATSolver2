@@ -1,6 +1,7 @@
 # KATSolver2
 ## Running Instructions:
-[core], [menhir], and [ocamllex] are needed for both implementations. 
+[core], [menhir], and [ocamllex] are needed for both implementations (as is 
+a version of the OCaml compiler. This was made with Ocaml 5.1.1). 
 
 To install [core], run:
 [opam install core]
