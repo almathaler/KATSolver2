@@ -2,7 +2,9 @@
 
 [core], [menhir], and [ocamllex] are needed for both implementations. To install 
 [core] and [menhir] run: 
+
 [opam install core]
+
 [opam instasll menhir]
 
 To use [ka_solver], run 
