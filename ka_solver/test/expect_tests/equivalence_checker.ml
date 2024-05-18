@@ -92,7 +92,7 @@ let%expect_test "x*, x*x*" =
   test_basic "x*" "x*x*"; 
   [%expect {| Are equivalent?: true |}]
 
-let%expect_test "x*, x**" = (* This maybe doesn't work b/c of set equality *)
+let%expect_test "x*, x**" = 
   test_basic "x*" "x**"; 
   [%expect {| Are equivalent?: true |}]
 
@@ -107,3 +107,25 @@ let%expect_test "(x+y)*, x*(yx*)*" =
 let%expect_test "x*, (1+x)(1+x)(xxx)*" = 
   test_basic "x*" "(1+x)(1+x)(xxx)*"; 
   [%expect {| Are equivalent?: true |}]
+
+(* Pous *)
+let%expect_test "(p+q)* = p*(qp*)*" = 
+  test_basic "(p+q)*" "p*(qp*)*";
+  [%expect {| Are equivalent?: true |}]
+
+let%expect_test "(p+q)* = ((1+p)(1+q))*" = 
+  test_basic "(p+q)*" "((1+p)(1+q))*";
+  [%expect {| Are equivalent?: true |}]
+
+let%expect_test "(pp)*(ppp)* = (ppp)*(pp)*" = 
+  test_basic "(pp)*(ppp)*" "(ppp)*(pp)*"; 
+  [%expect {| Are equivalent?: true |}]
+
+let%expect_test "(pp)*+p* = (ppp)*+p*" = 
+  test_basic "(pp)*+p*" "(ppp)*+p*"; 
+  [%expect {| Are equivalent?: true |}]
+
+let%expect_test "(p+q)* = q*p*" = 
+  test_basic "(p+q)*" "q*p*";
+  [%expect {| Are equivalent?: false |}]
+
