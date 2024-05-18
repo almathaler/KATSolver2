@@ -11,11 +11,11 @@ To install [menhir], run:
 
 To use [ka_solver], run: 
 [dune exec ka_solver help]
-from the [KATSolver2/ka_solver] directory
+from the [ka_solver] directory
 
 To use [kat_solver], run: 
 [dune exec kat_solver help]
-from [KATSolver2/kat_solver]
+from [kat_solver]
 
 ## More info:
 
