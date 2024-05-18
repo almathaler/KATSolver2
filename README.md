@@ -1,18 +1,20 @@
 # KATSolver2
+## Running Instructions:
+[core], [menhir], and [ocamllex] are needed for both implementations. 
 
-[core], [menhir], and [ocamllex] are needed for both implementations. To install 
-[core] and [menhir] run: 
-
+To install [core], run:
 [opam install core]
 
+To install [menhir], run:
 [opam instasll menhir]
 
-To use [ka_solver], run 
+To use [ka_solver], run: 
 [dune exec ka_solver help]
-from [KATSolver2/ka_solver] directory.
-To use [kat_solver], run 
+from the [KATSolver2/ka_solver] directory
+
+To use [kat_solver], run: 
 [dune exec kat_solver help]
-from [KATSolver2/kat_solver].
+from [KATSolver2/kat_solver]
 
 ## More info:
 
