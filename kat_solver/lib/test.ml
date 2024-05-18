@@ -13,6 +13,14 @@ let sexp_of_t = sexp_of_t
 
 let t_of_sexp = t_of_sexp
 
+let rec to_string = function 
+  | Zero -> "0"
+  | One -> "1"
+  | Prim c -> Char.to_string c 
+  | Not t -> "!(" ^ (to_string t) ^ ")"
+  | Lor (t1, t2) -> (to_string t1) ^ "+" ^ (to_string t2) 
+  | Land (t1, t2) -> "(" ^ (to_string t1) ^ ")(" ^ (to_string t2) ^ ")"
+
 let prim_to_bdd c = 
   Bdd.node c (Bdd.constant false) (Bdd.constant true)
 let rec to_bdd t = 

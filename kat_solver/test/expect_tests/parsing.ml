@@ -25,24 +25,24 @@ let%expect_test "xy" =
   test "xy"; 
   [%expect {| (Prod ((Prim x) (Prim y))) |}]
 
-let%expect_test "!(ab)" = 
-  test "!(ab)"; 
+let%expect_test "~(ab)" = 
+  test "~(ab)"; 
   [%expect {| (Test (Not (Land ((Prim a) (Prim b))))) |}]
 
-let%expect_test "!(a+b)" = 
-  test "!(a+b)"; 
+let%expect_test "~(a+b)" = 
+  test "~(a+b)"; 
   [%expect {| (Test (Not (Lor ((Prim a) (Prim b))))) |}]
 
-let%expect_test "x + !(ab)" = 
-  test "x + !(ab)"; 
+let%expect_test "x + ~(ab)" = 
+  test "x + ~(ab)"; 
   [%expect {| (Sum ((Prim x) (Test (Not (Land ((Prim a) (Prim b))))))) |}]
 
-let%expect_test "x!(ab)" = 
-  test "x!(ab)"; 
+let%expect_test "x~(ab)" = 
+  test "x~(ab)"; 
   [%expect {| (Prod ((Prim x) (Test (Not (Land ((Prim a) (Prim b))))))) |}]
 
-let%expect_test "x!(a+b)" =
-  test "x!(a+b)"; 
+let%expect_test "x~(a+b)" =
+  test "x~(a+b)"; 
   [%expect {| (Prod ((Prim x) (Test (Not (Lor ((Prim a) (Prim b))))))) |}]
 
 let%expect_test "a*" =
@@ -53,8 +53,8 @@ let%expect_test "x*" =
   test "x*";
   [%expect {| (Star (Prim x)) |}]
 
-let%expect_test "x*+!(ab)y+ayb" = 
-  test "x*+!(ab)y+ayb";
+let%expect_test "x*+~(ab)y+ayb" = 
+  test "x*+~(ab)y+ayb";
   [%expect {|
     (Sum
      ((Sum

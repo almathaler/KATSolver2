@@ -21,7 +21,7 @@ rule read =
             if String.length str > 1 then failwith "test primitive read as more than one char"
             else String.get str 0
     )}
-    | "!" {NOT}
+    | "~" {NOT}
     | "(" {LPAREN}
     | ")" {RPAREN}
     | "+" {PLUS}

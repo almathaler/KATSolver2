@@ -29,13 +29,13 @@ let%expect_test "1a, a" =
   test "1a" "a"; 
   [%expect {| ans: true, w1: None, w2: None |}]
 
-let%expect_test "!a, a" = 
-  test "!a" "a"; 
+let%expect_test "~a, a" = 
+  test "~a" "a"; 
   [%expect {|
     ans: false, w1: (a[true][false]), w2: (a[false][true]) |}]
 
-let%expect_test "ab+!b, ab" = 
-  test "ab+!b" "ab"; 
+let%expect_test "ab+~b, ab" = 
+  test "ab+~b" "ab"; 
   [%expect {|
     ans: false, w1: (a(b[true][false])[true]), w2: (a[false](b[false][true])) |}]
 
@@ -54,20 +54,20 @@ let%expect_test "1+x*, x*" =
   [%expect {| ans: true, w1: None, w2: None |}]
 
 (* From Sec. 4 of Pous, some simple laws from KAT *)
-let%expect_test "a + !a = 1" = 
-  test "a+!a" "1"; 
+let%expect_test "a + ~a = 1" = 
+  test "a+~a" "1"; 
   [%expect {| ans: true, w1: None, w2: None |}]
 
-let%expect_test "a(!a+b) = ab" = 
-  test "a(!a+b)" "ab";
+let%expect_test "a(~a+b) = ab" = 
+  test "a(~a+b)" "ab";
   [%expect {| ans: true, w1: None, w2: None |}]
 
-let%expect_test "ab = !(!a+!b)" = 
-  test "!(!a+!b)" "ab"; 
+let%expect_test "ab = ~(~a+~b)" = 
+  test "~(~a+~b)" "ab"; 
   [%expect {| ans: true, w1: None, w2: None |}]
 
-let%expect_test "a(!a+b) = !(!a+!b)" = 
-  test "a(!a+b)" "!(!a+!b)"; 
+let%expect_test "a(~a+b) = ~(~a+~b)" = 
+  test "a(~a+b)" "~(~a+~b)"; 
   [%expect {| ans: true, w1: None, w2: None |}]
 
 let%expect_test "x*x* = x*" = 
@@ -78,8 +78,8 @@ let%expect_test "(x+y)* = x*(yx*)*" =
   test "(x+y)*" "x*(yx*)*"; 
   [%expect {| ans: true, w1: None, w2: None |}]
 
-let%expect_test "a(!ax)* = a" = 
-  test "a(!ax)*" "a"; 
+let%expect_test "a(~ax)* = a" = 
+  test "a(~ax)*" "a"; 
   [%expect {| ans: true, w1: None, w2: None |}]
 
 (* Examples from https://perso.ens-lyon.fr/damien.pous/symbolickat/ *)
@@ -99,17 +99,17 @@ let%expect_test "(pp)*+p* = (ppp)*+p*" =
   test "(pp)*+p*" "(ppppp)*+p*"; 
   [%expect {| ans: true, w1: None, w2: None |}]
 
-let%expect_test "(ar!a)*, 1+ar!a" = 
-  test "(ar!a)*" "1+ar!a"; 
+let%expect_test "(ar~a)*, 1+ar~a" = 
+  test "(ar~a)*" "1+ar~a"; 
   [%expect {| ans: true, w1: None, w2: None |}]
 
-let%expect_test "(bc+!b!c)(brs+!brt) = bcrs+!b!crt" = 
-  test "(bc+!b!c)(brs+!brt)" "bcrs+!b!crt"; 
+let%expect_test "(bc+~b~c)(brs+~brt) = bcrs+~b~crt" = 
+  test "(bc+~b~c)(brs+~brt)" "bcrs+~b~crt"; 
   [%expect {| ans: true, w1: None, w2: None |}]
 
 (* WRONG *)
-let%expect_test "arp*+!arp** = brp*+!brp**" = 
-  test "arp*+!arp**" "brp*+!brp**"; 
+let%expect_test "arp*+~arp** = brp*+~brp**" = 
+  test "arp*+~arp**" "brp*+~brp**"; 
   [%expect {|
     ans: true, w1: None, w2: None |}]
 
@@ -117,19 +117,32 @@ let%expect_test "arp**+brq** = arp*+brq*" =
   test "arp**+brq**" "arp*+brq*"; 
   [%expect {| ans: true, w1: None, w2: None |}]
 
-let%expect_test "(ap)*!a(ap)*!a = (ap)*!a" = 
-  test "(ap)*!a(ap)*!a" "(ap)*!a"; 
+let%expect_test "(ap)*~a(ap)*~a = (ap)*~a" = 
+  test "(ap)*~a(ap)*~a" "(ap)*~a"; 
   [%expect {| ans: true, w1: None, w2: None |}]
 
-let%expect_test "a(ap!a+!aqa)*a = a(p!aqa)*" = 
-  test "a(ap!a+!aqa)*a" "a(p!aqa)*"; 
+let%expect_test "a(ap~a+~aqa)*a = a(p~aqa)*" = 
+  test "a(ap~a+~aqa)*a" "a(p~aqa)*"; 
   [%expect {| ans: true, w1: None, w2: None |}]
 
-let%expect_test "a(cpq+!cp)+!a(cpq+!cp) = c(bpq+!bpq)+!cp" = 
-  test "a(cpq+!cp)+!a(cpq+!cp)" "c(bpq+!bpq)+!cp";
+let%expect_test "a(cpq+~cp)+~a(cpq+~cp) = c(bpq+~bpq)+~cp" = 
+  test "a(cpq+~cp)+~a(cpq+~cp)" "c(bpq+~bpq)+~cp";
   [%expect {| ans: true, w1: None, w2: None |}]
 
+(* The below should be false / are only true under a hypothesis. Also all 
+   from Pous website *)
 
+let%expect_test "(p+q)* ~= q*p*" =
+  test "(p+q)*" "q*p*"; 
+  [%expect {| ans: false, w1: p+q*, w2: [false] |}]
+
+let%expect_test "ap~b+(b~aq)* < (b~aq+ap~b)" = 
+  test "ap~b+(b~aq)*" "(b~aq+ap~b)*";
+  [%expect {| ans: false, w1: [false], w2: ((b[true][false]))((((a[false][true]))(p))((b[true][false]))+((a(b[false][true])[false]))(q)*) |}]
+
+let%expect_test "(ap+~bq)* ~= (~bq)*(apb)*" = 
+  test "(ap+~bq)*" "(~bq)*(apb)*";
+  [%expect {| ans: false, w1: ((a[false][true]))(p)+((b[true][false]))(q)*, w2: ((b[false][true]))((((a[false][true]))(p))((b[false][true]))*) |}]
 
 
 

@@ -13,74 +13,74 @@ let%expect_test "a" =
   test "a";
   [%expect {| (N a (V false) (V true)) |}]
 
-let%expect_test "!a" = 
-  test "!a";
+let%expect_test "~a" = 
+  test "~a";
   [%expect {| (N a (V true) (V false)) |}]
 
-let%expect_test "!(a+b)" = 
-  test "!(a+b)"; 
+let%expect_test "~(a+b)" = 
+  test "~(a+b)"; 
   [%expect {| (N a (N b (V true) (V false)) (V false)) |}]
 
-let%expect_test "!!(a+b)" = 
-  test "!!(a+b)"; 
+let%expect_test "~~(a+b)" = 
+  test "~~(a+b)"; 
   [%expect {| (N a (N b (V false) (V true)) (V true)) |}]
 
-let%expect_test "!!(b+a)" = 
-  test "!!(b+a)"; 
+let%expect_test "~~(b+a)" = 
+  test "~~(b+a)"; 
   [%expect {| (N a (N b (V false) (V true)) (V true)) |}]
 
-let%expect_test "!!(a+b+!!(c+d))" = 
-  test "!!(a+b+!!(c+d))";
+let%expect_test "~~(a+b+~~(c+d))" = 
+  test "~~(a+b+~~(c+d))";
   [%expect {|
     (N a (N b (N c (N d (V false) (V true)) (V true)) (V true)) (V true)) |}]
 
-let%expect_test "!!(d+c+!!(b+a))" = 
-  test "!!(d+c+!!(b+a))";
+let%expect_test "~~(d+c+~~(b+a))" = 
+  test "~~(d+c+~~(b+a))";
   [%expect {|
     (N a (N b (N c (N d (V false) (V true)) (V true)) (V true)) (V true)) |}]
 
-let%expect_test "!!(ab)" = 
-  test "!!(ab)"; 
+let%expect_test "~~(ab)" = 
+  test "~~(ab)"; 
   [%expect {| (N a (V false) (N b (V false) (V true))) |}]
 
 
-let%expect_test "!!(fedcba)" = 
-  test "!!(fedcba)";
+let%expect_test "~~(fedcba)" = 
+  test "~~(fedcba)";
   [%expect {|
     (N a (V false)
      (N b (V false)
       (N c (V false) (N d (V false) (N e (V false) (N f (V false) (V true))))))) |}]
 
-let%expect_test "!!(f+e+d+!!(da+c+ba))" = 
-  test "!!(f+e+d+!!(da+c+ba))";
+let%expect_test "~~(f+e+d+~~(da+c+ba))" = 
+  test "~~(f+e+d+~~(da+c+ba))";
   [%expect {|
     (N a (N c (N d (N e (N f (V false) (V true)) (V true)) (V true)) (V true))
      (N b (N c (N d (N e (N f (V false) (V true)) (V true)) (V true)) (V true))
       (V true))) |}]
 
-let%expect_test "!!(1a)" = 
-  test "!!(1 + a)"; 
+let%expect_test "~~(1a)" = 
+  test "~~(1 + a)"; 
   [%expect {| (V true) |}]
 
-let%expect_test "!!(a+0)" = 
-  test "!!(a+0)"; 
+let%expect_test "~~(a+0)" = 
+  test "~~(a+0)"; 
   [%expect {| (N a (V false) (V true)) |}]
 
-let%expect_test "!!(1a)" = 
-  test "!!(1a)"; 
+let%expect_test "~~(1a)" = 
+  test "~~(1a)"; 
   [%expect {| (N a (V false) (V true)) |}]
 
-let%expect_test "!!(a0)" = 
-  test "!!(a0)"; 
+let%expect_test "~~(a0)" = 
+  test "~~(a0)"; 
   [%expect {| (V false) |}]
 
-let%expect_test "!!(aaa)" = 
-  test "!!(aaa)"; 
+let%expect_test "~~(aaa)" = 
+  test "~~(aaa)"; 
   [%expect {| (N a (V false) (V true)) |}]
 
 let test_to_string str = 
   str |> parse |> Expr.to_bdd |> Bdd.to_string Char.to_string Bool.to_string |> print_endline
 
-let%expect_test "!!(abc)" = 
-  test_to_string "!!(abd)"; 
+let%expect_test "~~(abc)" = 
+  test_to_string "~~(abd)"; 
   [%expect {| (a[false](b[false](d[false][true]))) |}]

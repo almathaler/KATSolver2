@@ -32,8 +32,8 @@ let%expect_test "ab" =
     (y, [[false]])
     (z, [[false]]) |}]
 
-let%expect_test "brp*+!brp" = 
-  test "brp*+!brp";
+let%expect_test "brp*+~brp" = 
+  test "brp*+~brp";
   [%expect {|
     (n, [[false]])
     (o, [[false]])
