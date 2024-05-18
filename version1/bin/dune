@@ -1,4 +1,0 @@
-(executable
- (public_name version1)
- (name main)
- (libraries version1))
