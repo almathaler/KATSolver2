@@ -30,7 +30,7 @@ except memoization.
 There already exists a KAT expression equivalence checker made by Pous at 
 https://perso.ens-lyon.fr/damien.pous/symbolickat/. I don't add anything new and 
 this implementation is not nearly as fast or efficient; regardless, this was a 
-useful and time-intensive exercise. In this project I thought deeply about 
+useful and time-intensive exercise. In this project I thought about 
 translating concepts from class (automaton exploration, bisimulations + coalgebras, 
 Brzozowski derivatives) into actual code. Most of all it took a while to plan 
 the data structures needed for representing symbolic derivatives. Even though 
