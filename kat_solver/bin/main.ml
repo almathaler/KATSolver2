@@ -48,7 +48,7 @@ let () =
       let p_w2 =  Sym_expr.to_string w2 in 
       Printf.printf "Not Equivalent. \n%s can reach %s \n%s can reach %s \nin the same sequence of steps, but these do not accept the same atoms \n"
        exp1 p_w1 exp2 p_w2
-    | _ -> print_endline "Error. Equivalence and witness Option do not match"
+    | _ -> print_endline "Implementation Error. Equivalence and witness Option do not match"
     )
   | [|_; "help"|] | [|_; "-help"|] -> display_kat_syntax () 
   | _ -> 
