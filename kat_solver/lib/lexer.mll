@@ -3,8 +3,8 @@
 }
 
 let white = [' ' '\t']+
-let tprim = ['a'-'m']
-let kprim = ['n'-'z']
+let tprim = ['a'-'j']
+let kprim = ['k'-'z']
 
 rule read = 
     parse 

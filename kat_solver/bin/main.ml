@@ -5,12 +5,28 @@ let parse (s : string) : Expr.t =
   let exp = Parser.expr Lexer.read lexbuf in
   exp
 
+let display_kat_syntax () = 
+  Format.printf "
+KAT SYNTAX:
+- Primitive actions : (m-z)
+- Primitive tests : (a-l)
+- Multiplication / Conjunction: Implicit
+- Addition / Disjunction: (+)
+- Kleene star: (*)
+- Negation: (!)
+- Zero: (0)
+- One: (1)
+Precedence is:
+Parenthesis > Negation > Kleene Star > Multiplication > Addition
+Example expression: 
+x(x+y)*!ab
+
+"
+
 let () =
-  let num_args = (Array.length Sys.argv) - 1 in 
-  if num_args = 2 then
+  match Sys.argv with 
+  | [|_; exp1; exp2|] -> 
     (
-    let exp1 = Array.get Sys.argv 1 in 
-    let exp2 = Array.get Sys.argv 2 in 
     let sym_exp1 = parse exp1 |> Sym_expr.of_expr in 
     let sym_exp2 = parse exp2 |> Sym_expr.of_expr in 
     let (are_equivalent, witness1, witness2) = Equivalence_checker.are_equivalent sym_exp1 sym_exp2 in 
@@ -23,5 +39,8 @@ let () =
        exp1 p_w1 exp2 p_w2
     | _ -> print_endline "Error. Equivalence and witness Option do not match"
     )
-  else
-    Printf.printf "Expected 'dune exec bin/main.exe \"<exp1>\" \"<exp2>\"', but %i arguments were passed \n" num_args
+  | [|_; "help"|] | [|_; "-help"|] -> failwith "todo"
+  | _ -> 
+    let args = Array.to_list Sys.argv |> List.tl |> List.rev in 
+    Printf.printf "Expected 'dune exec kat_solver \"<exp1>\" \"<exp2>\"'\nOr 'dune exec kat_solver help'\nBut [%s] was passed\n" 
+    (List.fold_right (fun x acc -> (x ^ "; " ^ acc)) (List.tl args) (List.hd args))
