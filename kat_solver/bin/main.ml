@@ -7,19 +7,30 @@ let parse (s : string) : Expr.t =
 
 let display_kat_syntax () = 
   Format.printf "
+This is a KAT expression equivalence checker. It uses a bisimulation on the 
+automata of guarded string languages to check equivalence of two KAT expressions.
+
+
+USAGE: 
+In the [kat_solver] directory, run: 
+'dune exec kat_solver \"<exp1>\" \"<exp2>\"'
+or 
+'dune exec kat_solver help'.
+
 KAT SYNTAX:
-- Primitive actions : (m-z)
-- Primitive tests : (a-l)
+- Primitive actions : (k-z)
+- Primitive tests : (a-j)
 - Multiplication / Conjunction: Implicit
 - Addition / Disjunction: (+)
 - Kleene star: (*)
-- Negation: (!)
+- Negation: (~) [tilde]
 - Zero: (0)
 - One: (1)
 Precedence is:
 Parenthesis > Negation > Kleene Star > Multiplication > Addition
-Example expression: 
-x(x+y)*!ab
+
+EXAMPLE: 
+dune exec kat_solver \"x(x+y)*~ab\" \"xx*~ayb\"
 
 "
 
@@ -39,7 +50,7 @@ let () =
        exp1 p_w1 exp2 p_w2
     | _ -> print_endline "Error. Equivalence and witness Option do not match"
     )
-  | [|_; "help"|] | [|_; "-help"|] -> failwith "todo"
+  | [|_; "help"|] | [|_; "-help"|] -> display_kat_syntax () 
   | _ -> 
     let args = Array.to_list Sys.argv |> List.tl |> List.rev in 
     Printf.printf "Expected 'dune exec kat_solver \"<exp1>\" \"<exp2>\"'\nOr 'dune exec kat_solver help'\nBut [%s] was passed\n" 
